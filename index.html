@@ -8,8 +8,6 @@
   <link rel="icon" type="image/png" href="./favicon.svg">
   <style>
       #wrapper {
-        width: 400px;
-        height: 267px;
         overflow: hidden;
         position: relative;
         background-color: black;
@@ -18,8 +16,6 @@
       #img {
           /* background-position: center; */
           transition: left 3s ease;
-          width: 100%;
-          height: 100%;
           position: relative;
           transform: scale(80);
           -webkit-transform: scale(80);
@@ -34,10 +30,21 @@
     </div>
   
     <script>
+        const wrapper = document.getElementById('wrapper');
         const image = document.getElementById('img');
-
+      
         const lefter = -277;
         const topper = 73;
+        
+        const screenWidth = document.body.clientWidth;
+        const screenHeight = document.body.clientHeight;
+        if (screenWidth < screenHeight) {
+          wrapper.style.width = screenWidth;
+          image.style.width = '100%';
+        } else {
+          wrapper.style.height = screenHeight;
+          image.style.height = '100%';
+        }
         
         setTimeout(() => {
           image.style.left = 0;
