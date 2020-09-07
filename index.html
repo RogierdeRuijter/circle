@@ -13,11 +13,15 @@
         overflow: hidden;
         position: relative;
         background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
       }
 
       #img {
-          transition: left 2.5s ease;
-          position: relative;
+          transition: all 2.5s ease;
+          position: absolute;
       }
   </style>
 </head>
@@ -42,10 +46,12 @@
         }
 
         const positions = ["left", "bottom", "top"];
-        const position = positions[Math.floor(Math.random() * 4)];
-        image.style[position] = -300%;
+        const position = positions[Math.floor(Math.random() * 3)];
+
+        console.log(position);
+        
+        image.style[position] = '-300%';
         setTimeout(() => {
-          image.style.top = 0;
           image.style[position] = 0;
         }, 1500);
 
