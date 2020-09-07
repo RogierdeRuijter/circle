@@ -16,13 +16,9 @@
       }
 
       #img {
-          /* background-position: center; */
           transition: left 2.5s ease;
           position: relative;
-          /* transform: scale(80);
-          -webkit-transform: scale(80); */
-          left: -277%;
-          top: 73%;
+          left: -300%;
       }
   </style>
 </head>
@@ -34,9 +30,6 @@
     <script>
         const wrapper = document.getElementById('wrapper');
         const image = document.getElementById('img');
-      
-        const lefter = -277;
-        const topper = 73;
         
         const screenWidth = document.body.clientWidth;
         const screenHeight = document.body.clientHeight;
@@ -52,15 +45,9 @@
         setTimeout(() => {
           image.style.left = 0;
           image.style.top = 0;
-          image.style.transform = "scale(" + 1 + ")";
-          image.style.webkitTransform = "scale(" + 1 + ")";
         }, 1500);
 
-        setTimeout(() => {
-          document.title = "Got u";
-
-          // image.src = "end-state.png"
-        }, 4000);
+        setTimeout(() => document.title = "Got u", 4000);
     </script>
 </body>
 </html>
