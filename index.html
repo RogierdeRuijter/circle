@@ -5,6 +5,8 @@
   <title>Huh?</title>
   <meta name="description" content="Jaaaa">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="reset.css">
+
   <link rel="icon" type="image/png" href="./favicon.svg">
   <style>
       #wrapper {
@@ -15,7 +17,7 @@
 
       #img {
           /* background-position: center; */
-          transition: left 3s ease;
+          transition: left 2s ease;
           position: relative;
           transform: scale(80);
           -webkit-transform: scale(80);
@@ -41,10 +43,10 @@
 
         if (screenWidth < screenHeight) {
           wrapper.style.width = screenWidth;
-          image.style.width = '100%';
+          image.style.width = '95%';
         } else {
           wrapper.style.height = screenHeight;
-          image.style.height = '100%';
+          image.style.height = '95%';
         }
         
         setTimeout(() => {
@@ -52,7 +54,7 @@
           image.style.top = 0;
           image.style.transform = "scale(" + 1 + ")";
           image.style.webkitTransform = "scale(" + 1 + ")";
-        }, 2000);
+        }, 1500);
 
         setTimeout(() => {
           document.title = "Got u";
