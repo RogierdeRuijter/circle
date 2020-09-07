@@ -21,6 +21,7 @@
       #img {
           transition: all 2.5s ease;
           position: relative;
+          left: -300%;
       }
 
       html {
@@ -53,11 +54,8 @@
           image.style.height = '95%';
         }
 
-        image.style.left = '-300%';
-        setTimeout(() => {
-          image.style.left = 0;
-        }, 1500);
-
+        setTimeout(() => image.style.left = 0, 1500);
+        
         setTimeout(() => document.title = "Got u", 4000);
     </script>
 </body>
