@@ -45,6 +45,7 @@
         const position = positions[Math.floor(Math.random() * 4)];
         image.style[position] = -300%;
         setTimeout(() => {
+          image.style.top = 0;
           image.style[position] = 0;
         }, 1500);
 
