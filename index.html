@@ -21,7 +21,7 @@
 
       #img {
           transition: all 2.5s ease;
-          position: absolute;
+          position: relative;
       }
   </style>
 </head>
@@ -45,14 +45,9 @@
           image.style.height = '95%';
         }
 
-        const positions = ["left", "bottom", "top"];
-        const position = positions[Math.floor(Math.random() * 3)];
-
-        console.log(position);
-        
-        image.style[position] = '-300%';
+        image.style.left = '-300%';
         setTimeout(() => {
-          image.style[position] = 0;
+          image.style.left = 0;
         }, 1500);
 
         setTimeout(() => document.title = "Got u", 4000);
