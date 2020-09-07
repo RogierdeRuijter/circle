@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="reset.css">
 
-  <link rel="icon" type="image/png" href="./favicon.svg">
+  <link rel="icon" type="image/png" href="./favicon.png">
   <style>
       #wrapper {
         position: relative;
@@ -55,8 +55,15 @@
         }
 
         setTimeout(() => image.style.left = 0, 1500);
-        
-        setTimeout(() => document.title = "Got u", 4000);
+
+        setTimeout(() => {
+          document.title = "Got u";
+          var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+          link.type = 'image/x-icon';
+          link.rel = 'shortcut icon';
+          link.href = 'circle-hand.png';
+          document.getElementsByTagName('head')[0].appendChild(link);
+          }, 4000);
     </script>
 </body>
 </html>
