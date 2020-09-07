@@ -61,11 +61,11 @@
         setTimeout(() => {
           document.title = "Got u";
           
-          var favicon = document.querySelector('link[rel="shortcut icon"]');
+          var favicon = document.querySelector('link[rel="icon"]');
     
           if (!favicon) {
               favicon = document.createElement('link');
-              favicon.setAttribute('rel', 'shortcut icon');
+              favicon.setAttribute('rel', 'icon');
               var head = document.querySelector('head');
               head.appendChild(favicon);
           }
