@@ -42,7 +42,7 @@
         }
 
         const positions = ["left", "bottom", "top"];
-        const position = positions.indexOf(Math.floor(Math.random() * 4));
+        const position = positions[Math.floor(Math.random() * 4)];
         image.style[position] = -300%;
         setTimeout(() => {
           image.style[position] = 0;
