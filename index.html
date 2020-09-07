@@ -62,7 +62,8 @@
           document.title = "Got u";
           
           var favicon = document.querySelector('link[rel="icon"]');
-    
+          var appleTouchIcon = document.querySelector('link[rel="apple-touch-icon"]');
+
           if (!favicon) {
               favicon = document.createElement('link');
               favicon.setAttribute('rel', 'icon');
@@ -73,6 +74,8 @@
           
           favicon.setAttribute('type', 'image/png');
           favicon.setAttribute('href', 'circle-hand.png');
+
+          appleTouchIcon.setAttribute('href', 'circle-hand.png');
           }, 4000);
     </script>
 </body>
