@@ -18,7 +18,6 @@
       #img {
           transition: left 2.5s ease;
           position: relative;
-          left: -300%;
       }
   </style>
 </head>
@@ -41,10 +40,12 @@
           wrapper.style.height = screenHeight;
           image.style.height = '95%';
         }
-        
+
+        const positions = ["left", "bottom", "top"];
+        const position = positions.indexOf(Math.floor(Math.random() * 4));
+        image.style[position] = -300%;
         setTimeout(() => {
-          image.style.left = 0;
-          image.style.top = 0;
+          image.style[position] = 0;
         }, 1500);
 
         setTimeout(() => document.title = "Got u", 4000);
