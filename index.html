@@ -56,7 +56,9 @@
           image.style.height = '95%';
         }
 
-        setTimeout(() => image.style.left = 0, 1500);
+        setTimeout(() => {
+          requestAnimationFrame(() => image.style.left = 0)
+          }, 1500);
 
         setTimeout(() => {
           document.title = "Got u";
@@ -70,7 +72,6 @@
               var head = document.querySelector('head');
               head.appendChild(favicon);
           }
-          
           
           favicon.setAttribute('type', 'image/png');
           favicon.setAttribute('href', 'circle-hand.png');
