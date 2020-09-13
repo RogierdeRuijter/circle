@@ -30,45 +30,102 @@
         flex-direction: column;
       }
 
-      #img {
-          transition: all 2.5s ease;
+      #image-wrapper {
           position: relative;
-          left: -300%;
+          display: none;
+          user-select: none;
+          -moz-user-select: none;
+          -khtml-user-select: none;
+          -webkit-user-select: none;
+          -o-user-select: none;
       }
 
       html {
         background-color: black;
+        /* cursor: url('index-finger.png'), auto; */
       }
 
       body {
-        display: flex;
-        justify-content: center;
+        /* display: flex;
+        justify-content: center; */
+      }
+
+      #neutralize-circle {
+        position: absolute;
+        width: 20%;
+        height: 24%;
+        left: 43%;
+        top: 34%;
+        border: 1px solid blue;
+      }
+
+      #total {
+        position: fixed;
+        color: white;
+        right: 20px;
+        top: 20px;
       }
   </style>
 </head>
 <body>
-    <div id="wrapper">
-        <img id="img" src="circle.jpg">
-    </div>
+    <div id="got-u" style="color: white; display: none; align-items: center; justify-content: center;">Got u <img style="width: 30px;"src="circle-hand.png"></div>
+    <!-- <div id="wrapper"> -->
+
+        <div id="image-wrapper">
+          <img id="image" src="circle.jpg">
+          <div id="neutralize-circle" onclick="handleNeutralize()"></div>
+        </div>
+    <!-- </div> -->
   
     <script>
         const wrapper = document.getElementById('wrapper');
-        const image = document.getElementById('img');
-        
+        const image = document.getElementById('image');
+        const imageWrapper = document.getElementById('image-wrapper');
+        const neutralizeCircle = document.getElementById('neutralize-circle');
+        const gotU = document.getElementById('got-u');
+
         const screenWidth = document.body.clientWidth;
         const screenHeight = document.body.clientHeight;
 
-        if (screenWidth < screenHeight) {
-          wrapper.style.width = screenWidth;
-          image.style.width = '95%';
-        } else {
-          wrapper.style.height = screenHeight;
-          image.style.height = '95%';
+        if (screenWidth < screenHeight) {          
+          imageWrapper.style.width = '45%';
+          image.style.width = '100%';
+        } else {          
+          imageWrapper.style.height = '45%';
+          image.style.height = '100%';
         }
 
-        setTimeout(() => {
-          requestAnimationFrame(() => image.style.left = 0)
-          }, 1500);
+        let neutralize = false;
+
+        const handleNeutralize = () => {
+          console.log('handleNeutralize');
+          let neutralize = true;
+        };
+
+        // neutralizeCircle.addEventListener('click', handleNeutralize);
+        let firstTime = true;
+
+        setInterval(() => requestAnimationFrame(() => {
+          // Set position
+          imageWrapper.style.display = 'inline-block';
+          imageWrapper.style.left = getRandomInt(80).toString() + '%';
+          imageWrapper.style.top = getRandomInt(80).toString() + '%';
+          
+          if (firstTime === false) {
+            if (neutralize === false) {
+              gotU.style.display = 'flex';
+            }
+
+            if (neutralize === true) {
+              gotU.style.display = 'none';
+            }
+
+            neutralize = false;
+          }
+          firstTime = false;
+        }), 2500);
+
+        const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
 
         setTimeout(() => {
           document.title = "Got u";
