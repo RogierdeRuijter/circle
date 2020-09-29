@@ -110,10 +110,6 @@
         
           setTimeout(() => {
             requestAnimationFrame(() => {
-              if (neutralize === false) {
-                me.innerHTML = parseInt(me.innerHTML) + 1;
-              }
-
               if (getRandomInt(10) % 2 === 0) {
                 imageWrapper.style.left = '-150%';
               } else {
@@ -126,6 +122,10 @@
                 imageWrapper.style.top = '-' + getRandomInt(150) + '%';
               }
               setTimeout(() => {
+                if (neutralize === false) {
+                  me.innerHTML = parseInt(me.innerHTML) + 1;
+                }
+
                 // Reset flag when out of screen
                 neutralize = false;
               }, 200);  
