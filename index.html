@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Huh?</title>
+  <title>😁</title>
   <meta name="description" content="Jaaaa">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="reset.css">
@@ -21,33 +21,33 @@
   </script>
 
   <style>
-      #wrapper {
+      /* #wrapper {
         position: relative;
         background-color: black;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-      }
+      } */
 
       #image-wrapper {
           position: relative;
-          display: none;
+          display: inline-block;
+
+          /* display: none;
           user-select: none;
           -moz-user-select: none;
           -khtml-user-select: none;
           -webkit-user-select: none;
-          -o-user-select: none;
+          -o-user-select: none; */
+
+          transition: all 1s ease;
+          left: -150%;
+          top: 54%;
       }
 
       html {
         background-color: black;
-        /* cursor: url('index-finger.png'), auto; */
-      }
-
-      body {
-        /* display: flex;
-        justify-content: center; */
       }
 
       #neutralize-circle {
@@ -58,93 +58,108 @@
         top: 34%;
         border: 1px solid blue;
       }
-
-      #total {
-        position: fixed;
-        color: white;
-        right: 20px;
-        top: 20px;
-      }
   </style>
 </head>
 <body>
-    <div id="got-u" style="color: white; display: none; align-items: center; justify-content: center;">Got u <img style="width: 30px;"src="circle-hand.png"></div>
-    <!-- <div id="wrapper"> -->
+    <div id="score-container">
+      <div style="color: white;">You: <span id="you">0</span></div>
+      <div style="color: white;">Me: <span id="me">0</span></div>
+    </div>
 
-        <div id="image-wrapper">
-          <img id="image" src="circle.jpg">
-          <div id="neutralize-circle" onclick="handleNeutralize()"></div>
-        </div>
-    <!-- </div> -->
+    <div style="position: relative; height: 100%;">
+      <div id="image-wrapper">
+        <img id="image" src="circle.jpg">
+        <div id="neutralize-circle" onclick="handleNeutralize()"></div>
+      </div>
+    </div>
   
     <script>
         const wrapper = document.getElementById('wrapper');
+        
         const image = document.getElementById('image');
         const imageWrapper = document.getElementById('image-wrapper');
+        
         const neutralizeCircle = document.getElementById('neutralize-circle');
-        const gotU = document.getElementById('got-u');
+
+        const you = document.getElementById('you');
+        const me = document.getElementById('me');
 
         const screenWidth = document.body.clientWidth;
         const screenHeight = document.body.clientHeight;
 
         if (screenWidth < screenHeight) {          
-          imageWrapper.style.width = '45%';
+          imageWrapper.style.width = '35%';
           image.style.width = '100%';
         } else {          
-          imageWrapper.style.height = '45%';
+          imageWrapper.style.height = '35%';
           image.style.height = '100%';
         }
 
         let neutralize = false;
 
         const handleNeutralize = () => {
-          console.log('handleNeutralize');
-          let neutralize = true;
+          if (neutralize === false) { 
+            you.innerHTML = parseInt(you.innerHTML) + 1;
+            neutralize = true;
+          }
         };
 
-        // neutralizeCircle.addEventListener('click', handleNeutralize);
         let firstTime = true;
+        const subtraction = 100;
 
         setInterval(() => requestAnimationFrame(() => {
-          // Set position
-          imageWrapper.style.display = 'inline-block';
-          imageWrapper.style.left = getRandomInt(80).toString() + '%';
-          imageWrapper.style.top = getRandomInt(80).toString() + '%';
-          
-          if (firstTime === false) {
-            if (neutralize === false) {
-              gotU.style.display = 'flex';
-            }
+          // imageWrapper.style.display = 'inline-block';
+          imageWrapper.style.left = getRandomInt(100 - 35) + '%';
+          imageWrapper.style.top = getRandomInt(100 - 35) + '%';
 
-            if (neutralize === true) {
-              gotU.style.display = 'none';
+          // imageWrapper.style.right = 0;
+          // imageWrapper.style.top = getRandomInt(80).toString() + '%';
+
+          let reactionTime = 2000;
+          
+          setTimeout(() => {
+            if (neutralize === false) {
+              me.innerHTML = parseInt(me.innerHTML) + 1;
             }
 
             neutralize = false;
-          }
-          firstTime = false;
-        }), 2500);
+            if (getRandomInt(10) % 2 === 0) {
+              imageWrapper.style.left = '-150%';
+            } else {
+              imageWrapper.style.left = '150%';
+            }
+
+            if (getRandomInt(10) % 2 === 0) {
+            imageWrapper.style.top = getRandomInt(150) + '%';
+            } else {
+              imageWrapper.style.top = '-' + getRandomInt(150) + '%';
+            }
+
+          // reactionTime -= subtraction;          
+          }, reactionTime)
+
+        }), 6000);
 
         const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
 
-        setTimeout(() => {
-          document.title = "Got u";
+        // setTimeout(() => {
+        //   document.title = "Got u";
           
-          var favicon = document.querySelector('link[rel="icon"]');
-          var appleTouchIcon = document.querySelector('link[rel="apple-touch-icon"]');
+        //   var favicon = document.querySelector('link[rel="icon"]');
+        //   var appleTouchIcon = document.querySelector('link[rel="apple-touch-icon"]');
 
-          if (!favicon) {
-              favicon = document.createElement('link');
-              favicon.setAttribute('rel', 'icon');
-              var head = document.querySelector('head');
-              head.appendChild(favicon);
-          }
+        //   if (!favicon) {
+        //       favicon = document.createElement('link');
+        //       favicon.setAttribute('rel', 'icon');
+        //       var head = document.querySelector('head');
+        //       head.appendChild(favicon);
+        //   }
           
-          favicon.setAttribute('type', 'image/png');
-          favicon.setAttribute('href', 'circle-hand.png');
+        //   favicon.setAttribute('type', 'image/png');
+        //   favicon.setAttribute('href', 'circle-hand.png');
 
-          appleTouchIcon.setAttribute('href', 'circle-hand.png');
-          }, 4000);
+        //   appleTouchIcon.setAttribute('href', 'circle-hand.png');
+        //   }, 4000);
     </script>
 </body>
 </html>
