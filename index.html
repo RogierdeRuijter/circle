@@ -41,6 +41,8 @@
         -khtml-user-select: none;
         -webkit-user-select: none;
         -o-user-select: none;
+
+        overflow: hidden;
       }
 
       #neutralize-circle {
@@ -81,17 +83,16 @@
         const screenHeight = document.body.clientHeight;
 
         if (screenWidth < screenHeight) {          
-          imageWrapper.style.width = '35%';
+          imageWrapper.style.width = '45%';
           image.style.width = '100%';
         } else {          
-          imageWrapper.style.height = '35%';
+          imageWrapper.style.height = '45%';
           image.style.height = '100%';
         }
 
         let neutralize = false;
 
         const handleNeutralize = () => {
-          console.log('handleNeutralize');
           if (neutralize === false) { 
             you.innerHTML = parseInt(you.innerHTML) + 1;
             neutralize = true;
@@ -100,11 +101,12 @@
 
         let firstTime = true;
         const subtraction = 100;
-        let reactionTime = 2000;
+        let reactionTime = 1700;
+        const sizeOfHand = 35;
 
         setInterval(() => requestAnimationFrame(() => {
-          imageWrapper.style.left = getRandomInt(100 - 35) + '%';
-          imageWrapper.style.top = getRandomInt(100 - 35) + '%';
+          imageWrapper.style.left = getRandomInt(100 - sizeOfHand) + '%';
+          imageWrapper.style.top = getRandomInt(100 - sizeOfHand) + '%';
         
           setTimeout(() => {
             requestAnimationFrame(() => {
@@ -112,7 +114,6 @@
                 me.innerHTML = parseInt(me.innerHTML) + 1;
               }
 
-              neutralize = false;
               if (getRandomInt(10) % 2 === 0) {
                 imageWrapper.style.left = '-150%';
               } else {
@@ -120,12 +121,16 @@
               }
 
               if (getRandomInt(10) % 2 === 0) {
-              imageWrapper.style.top = getRandomInt(150) + '%';
+                imageWrapper.style.top = getRandomInt(150) + '%';
               } else {
                 imageWrapper.style.top = '-' + getRandomInt(150) + '%';
               }
+              setTimeout(() => {
+                // Reset flag when out of screen
+                neutralize = false;
+              }, 200);  
 
-              if (reactionTime > 900) {
+              if (reactionTime > 1000) {
                 reactionTime -= subtraction;
               }
             })
@@ -134,6 +139,18 @@
         }), 6000);
 
         const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
+
+        function touchHandler(event) {
+          if(event.touches.length > 1){
+              //the event is multi-touch
+              //you can then prevent the behavior
+              event.preventDefault()
+          }
+        };
+
+        window.addEventListener("touchstart", touchHandler, false);
+
+        neutralizeCircle.addEventListener('touchstart', function(e){e.stopPropagation()}, false);
     </script>
 </body>
 </html>
