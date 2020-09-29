@@ -21,29 +21,22 @@
   </script>
 
   <style>
-      /* #wrapper {
-        position: relative;
-        background-color: black;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-      } */
-
       #image-wrapper {
           position: relative;
           display: inline-block;
 
-          /* display: none;
           user-select: none;
           -moz-user-select: none;
           -khtml-user-select: none;
           -webkit-user-select: none;
-          -o-user-select: none; */
+          -o-user-select: none;
 
           transition: all 1s ease;
-          left: -150%;
+          /* left: -150%; */
+          left: 50%;
           top: 54%;
+
+          background-color: black;
       }
 
       html {
@@ -61,9 +54,9 @@
   </style>
 </head>
 <body>
-    <div id="score-container">
-      <div style="color: white;">You: <span id="you">0</span></div>
-      <div style="color: white;">Me: <span id="me">0</span></div>
+    <div id="score-container" style="display: flex; justify-content: center; align-items: baseline;">
+      <div style="color: white; margin-right: 20px; text-align: center;"><span style="font-size: 14px;">you: </span><span id="you" style="font-size: 18px;">0</span></div>
+      <div style="color: white; font-size: 17px;"><span style="font-size: 14px;">me: </span><span id="me" style="font-size: 18px;">0</span></div>
     </div>
 
     <div style="position: relative; height: 100%;">
@@ -106,39 +99,38 @@
 
         let firstTime = true;
         const subtraction = 100;
+        let reactionTime = 2000;
 
-        setInterval(() => requestAnimationFrame(() => {
-          // imageWrapper.style.display = 'inline-block';
-          imageWrapper.style.left = getRandomInt(100 - 35) + '%';
-          imageWrapper.style.top = getRandomInt(100 - 35) + '%';
-
-          // imageWrapper.style.right = 0;
-          // imageWrapper.style.top = getRandomInt(80).toString() + '%';
-
-          let reactionTime = 2000;
+        // setInterval(() => requestAnimationFrame(() => {
+        //   setTimeout(() => {
+        //     imageWrapper.style.left = getRandomInt(100 - 35) + '%';
+        //     imageWrapper.style.top = getRandomInt(100 - 35) + '%';
+        //   }, 0)
           
-          setTimeout(() => {
-            if (neutralize === false) {
-              me.innerHTML = parseInt(me.innerHTML) + 1;
-            }
+        //   setTimeout(() => {
+        //     if (neutralize === false) {
+        //       me.innerHTML = parseInt(me.innerHTML) + 1;
+        //     }
 
-            neutralize = false;
-            if (getRandomInt(10) % 2 === 0) {
-              imageWrapper.style.left = '-150%';
-            } else {
-              imageWrapper.style.left = '150%';
-            }
+        //     neutralize = false;
+        //     if (getRandomInt(10) % 2 === 0) {
+        //       imageWrapper.style.left = '-150%';
+        //     } else {
+        //       imageWrapper.style.left = '150%';
+        //     }
 
-            if (getRandomInt(10) % 2 === 0) {
-            imageWrapper.style.top = getRandomInt(150) + '%';
-            } else {
-              imageWrapper.style.top = '-' + getRandomInt(150) + '%';
-            }
+        //     if (getRandomInt(10) % 2 === 0) {
+        //     imageWrapper.style.top = getRandomInt(150) + '%';
+        //     } else {
+        //       imageWrapper.style.top = '-' + getRandomInt(150) + '%';
+        //     }
 
-          // reactionTime -= subtraction;          
-          }, reactionTime)
+        //     if (reactionTime > 900) {
+        //       reactionTime -= subtraction;
+        //     }
+        //   }, reactionTime)
 
-        }), 6000);
+        // }), 6000);
 
         const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
 
