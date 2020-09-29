@@ -25,21 +25,22 @@
           position: relative;
           display: inline-block;
 
-          user-select: none;
-          -moz-user-select: none;
-          -khtml-user-select: none;
-          -webkit-user-select: none;
-          -o-user-select: none;
-
           transition: all 1s ease;
           left: -150%;
           top: 54%;
 
-          background-color: black;
+          /* background-color: black; */
       }
 
       html {
         background-color: black;
+
+
+        user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -o-user-select: none;
       }
 
       #neutralize-circle {
@@ -90,6 +91,7 @@
         let neutralize = false;
 
         const handleNeutralize = () => {
+          console.log('handleNeutralize');
           if (neutralize === false) { 
             you.innerHTML = parseInt(you.innerHTML) + 1;
             neutralize = true;
