@@ -32,7 +32,6 @@
           -o-user-select: none;
 
           transition: all 1s ease;
-          /* left: -150%; */
           left: 50%;
           top: 54%;
 
@@ -49,14 +48,14 @@
         height: 24%;
         left: 43%;
         top: 34%;
-        border: 1px solid blue;
+        /* border: 1px solid blue; */
       }
   </style>
 </head>
 <body>
     <div id="score-container" style="display: flex; justify-content: center; align-items: baseline;">
-      <div style="color: white; margin-right: 20px; text-align: center;"><span style="font-size: 14px;">you: </span><span id="you" style="font-size: 18px;">0</span></div>
-      <div style="color: white; font-size: 17px;"><span style="font-size: 14px;">me: </span><span id="me" style="font-size: 18px;">0</span></div>
+      <div style="color: white; margin-right: 20px; text-align: center; margin-top: 10px;"><span style="font-size: 14px;">you: </span><span id="you" style="font-size: 18px;">0</span></div>
+      <div style="color: white; font-size: 17px; margin-top: 10px;"><span style="font-size: 14px;">me: </span><span id="me" style="font-size: 18px;">0</span></div>
     </div>
 
     <div style="position: relative; height: 100%;">
@@ -133,25 +132,6 @@
         }), 6000);
 
         const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
-
-        // setTimeout(() => {
-        //   document.title = "Got u";
-          
-        //   var favicon = document.querySelector('link[rel="icon"]');
-        //   var appleTouchIcon = document.querySelector('link[rel="apple-touch-icon"]');
-
-        //   if (!favicon) {
-        //       favicon = document.createElement('link');
-        //       favicon.setAttribute('rel', 'icon');
-        //       var head = document.querySelector('head');
-        //       head.appendChild(favicon);
-        //   }
-          
-        //   favicon.setAttribute('type', 'image/png');
-        //   favicon.setAttribute('href', 'circle-hand.png');
-
-        //   appleTouchIcon.setAttribute('href', 'circle-hand.png');
-        //   }, 4000);
     </script>
 </body>
 </html>
