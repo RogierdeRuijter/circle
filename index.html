@@ -72,7 +72,7 @@
     <div style="position: relative; height: 100%;">
       <div id="image-wrapper">
         <img id="image" src="circle.jpg">
-        <div id="neutralize-circle" ontouchstart="handleNeutralize()" onmousedown="handleNeutralize()"></div>
+        <div id="neutralize-circle"></div>
       </div>
     </div>
   
@@ -141,6 +141,7 @@
               }
           }
           event.preventDefault();
+          event.stopPropagation();
         };
 
         let firstTime = true;
@@ -207,8 +208,9 @@
         };
 
         window.addEventListener("touchstart", touchHandler, false);
-
-        neutralizeCircle.addEventListener('touchstart', function(e){e.stopPropagation()}, false);
+        
+        neutralizeCircle.addEventListener('touchstart', handleNeutralize, false);
+        neutralizeCircle.addEventListener('onmousedown', handleNeutralize, false);
     </script>
 </body>
 </html>
