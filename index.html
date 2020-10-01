@@ -56,9 +56,17 @@
   </style>
 </head>
 <body>
+    <div id="you-congrats" style="display: none; color: white; width: 100%; height: 100%; z-index: 4; position: absolute; align-items: center; justify-content: center; flex-direction: row;">
+      <div style="font-size: 40px;">You won, good job</div>
+    </div>
+
+    <div id="me-congrats" style="display: none; color: white; width: 100%; height: 100%; z-index: 4; position: absolute; align-items: center; justify-content: center; flex-direction: row;">
+      <div style="font-size: 40px;">HaHa, I won better luck next time</div>
+    </div>
+
     <div id="score-container" style="display: flex; justify-content: center; align-items: baseline;">
-      <div style="color: white; margin-right: 20px; text-align: center; margin-top: 10px;"><span style="font-size: 14px;">you: </span><span id="you" style="font-size: 18px;">0</span></div>
-      <div style="color: white; font-size: 17px; margin-top: 10px;"><span style="font-size: 14px;">me: </span><span id="me" style="font-size: 18px;">0</span></div>
+      <div style="color: white; margin-right: 30px; text-align: center; margin-top: 10px;"><span style="font-size: 14px;">you: </span><span id="you" style="font-size: 18px;">0</span><span>/10</span></div>
+      <div style="color: white; font-size: 17px; margin-top: 10px;"><span style="font-size: 14px;">me: </span><span id="me" style="font-size: 18px;">0</span><span>/10</span></div>
     </div>
 
     <div style="position: relative; height: 100%;">
@@ -79,6 +87,9 @@
         const you = document.getElementById('you');
         const me = document.getElementById('me');
 
+        const youCongrats = document.getElementById('you-congrats');
+        const meCongrats = document.getElementById('me-congrats');
+
         const screenWidth = document.body.clientWidth;
         const screenHeight = document.body.clientHeight;
 
@@ -94,8 +105,42 @@
 
         const handleNeutralize = () => {
           if (neutralize === false) { 
-            you.innerHTML = parseInt(you.innerHTML) + 1;
+            youScore += 1;
+            
+            you.innerHTML = youScore;
             neutralize = true;
+
+            switch (youScore) {
+                case 1:
+                  reactionTime -= subtraction;
+                  break;
+                case 2:
+                  reactionTime -= subtraction;
+                  break;
+                case 3:
+                  reactionTime -= subtraction;
+                  break;
+                case 4:
+                  reactionTime -= subtraction;
+                  break;
+                case 5:
+                  reactionTime -= subtraction;
+                  break;
+                case 6:
+                  reactionTime -= subtraction;
+                  break;
+                case 7:
+                  reactionTime -= 50;
+                  break;
+                case 8:
+                  reactionTime -= 50;
+                  break;
+                case 9:
+                  reactionTime -= 50;
+                  break;
+              }
+
+              console.log(reactionTime);
           }
         };
 
@@ -104,7 +149,10 @@
         let reactionTime = 1700;
         const sizeOfHand = 35;
 
-        setInterval(() => requestAnimationFrame(() => {
+        let youScore = 0;
+        let meScore = 0;
+
+        const mainLoop = setInterval(() => requestAnimationFrame(() => {
           imageWrapper.style.left = getRandomInt(100 - sizeOfHand) + '%';
           imageWrapper.style.top = getRandomInt(100 - sizeOfHand) + '%';
         
@@ -121,18 +169,26 @@
               } else {
                 imageWrapper.style.top = '-' + getRandomInt(150) + '%';
               }
+              
               setTimeout(() => {
                 if (neutralize === false) {
-                  me.innerHTML = parseInt(me.innerHTML) + 1;
+                  meScore += 1;
+                  me.innerHTML = meScore;
                 }
+
+              if (youScore === 10) {
+                youCongrats.style.display = 'flex';
+                clearInterval(mainLoop);
+              }
+
+              if (meScore === 10) {
+                meCongrats.style.display = 'flex';
+                clearInterval(mainLoop);
+              }
 
                 // Reset flag when out of screen
                 neutralize = false;
-              }, 200);  
-
-              if (reactionTime > 1000) {
-                reactionTime -= subtraction;
-              }
+              }, 200);
             })
           }, reactionTime)
 
