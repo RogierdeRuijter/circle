@@ -144,11 +144,14 @@
 
         let firstTime = true;
         const subtraction = 100;
-        let reactionTime = 1700;
+        let reactionTime = 1650;
         const sizeOfHand = 35;
 
         let youScore = 0;
         let meScore = 0;
+
+        document.getElementById('image').setAttribute('draggable', false);
+
 
         const mainLoop = setInterval(() => requestAnimationFrame(() => {
           imageWrapper.style.left = getRandomInt(100 - sizeOfHand) + '%';
