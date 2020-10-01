@@ -103,7 +103,7 @@
 
         let neutralize = false;
 
-        const handleNeutralize = () => {
+        const handleNeutralize = (event) => {
           if (neutralize === false) { 
             youScore += 1;
             
@@ -140,6 +140,7 @@
                   break;
               }
           }
+          event.preventDefault();
         };
 
         let firstTime = true;
