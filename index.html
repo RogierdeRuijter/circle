@@ -147,53 +147,12 @@
         let neutralize = false;
         let firstTime = true;
         
-        const subtraction = 100;
         const sizeOfHand = 35;
 
-        let reactionTime = 1700;
+        let reactionTime = 1750;
 
         let youScore = 0;
         let meScore = 0;
-
-        let transitionTime = 1000
-
-        const handleNeutralize = (event) => {
-          if (neutralize === false) { 
-            youScore += 1;
-            
-            you.innerHTML = youScore;
-            neutralize = true;
-
-            switch (youScore) {
-                case 1:
-                  reactionTime -= 250;
-                  transitionTime -= 100;
-                  break;
-                case 2:
-                  reactionTime -= 150;
-                  transitionTime -= 50;
-                  break;
-                case 3:
-                  reactionTime -= 150;
-                  transitionTime -= 50;
-                  break;
-                case 4:
-                  reactionTime -= 150;
-                  transitionTime -= 50;
-                  break;
-                case 5:
-                  reactionTime -= 150;
-                  transitionTime -= 0;
-                  break;
-              }
-          }
-
-          imageWrapper.style.transition = `all ${transitionTime}ms ease`;
-
-          // Stop the event from progating and the user to able to zoom/drag the image
-          event.preventDefault();
-          event.stopPropagation();
-        };
 
         const mainLoop = setInterval(() => {
           // You do 100 - the size of the hand to make sure that the hand is always in the screen
@@ -234,6 +193,46 @@
           }, reactionTime);
 
         }, 6000);
+
+        let transitionTime = 1000;
+
+        const handleNeutralize = (event) => {
+          if (neutralize === false) { 
+            youScore += 1;
+            
+            you.innerHTML = youScore;
+            neutralize = true;
+
+            switch (youScore) {
+                case 1:
+                  reactionTime -= 500;
+                  transitionTime -= 100;
+                  break;
+                case 2:
+                  reactionTime -= 150;
+                  transitionTime -= 50;
+                  break;
+                case 3:
+                  reactionTime -= 150;
+                  transitionTime -= 50;
+                  break;
+                case 4:
+                  reactionTime -= 150;
+                  transitionTime -= 50;
+                  break;
+                case 5:
+                  reactionTime -= 100;
+                  transitionTime -= 0;
+                  break;
+              }
+          }
+
+          imageWrapper.style.transition = `all ${transitionTime}ms ease`;
+
+          // Stop the event from progating and the user to able to zoom/drag the image
+          event.preventDefault();
+          event.stopPropagation();
+        };
 
         const setHandSizeBasedOnScreenSize = () => {
           const screenWidth = document.body.clientWidth;
