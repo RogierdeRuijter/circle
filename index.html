@@ -25,6 +25,7 @@
        /* Disable double tab to zoom on android */
         touch-action: manipulation;
       }
+
      html {
         background-color: black;
 
@@ -47,6 +48,7 @@
         display: inline-block;
 
         transition: all 1s ease;
+        
         left: -150%;
         top: 54%;
       }
@@ -101,6 +103,83 @@
         font-size: 17px; 
         margin-top: 10px;
       }
+
+      #you-score {
+        display: inline-block;
+      }
+
+      #me-score {
+        display: inline-block;
+      }
+
+      #pulse-wrapper {
+        position: absolute;
+        display: none;
+        z-index: -1;
+      }
+
+      @keyframes me-bounce { 
+        0% { transform: translateY(0); }
+        100% { transform: translateY(10px); }
+      }
+
+      @keyframes you-bounce { 
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-10px); }
+      }
+
+      .me-bounce-animation {
+        animation: me-bounce 0.15s;
+        animation-direction: alternate;
+        animation-iteration-count: 2;
+      }
+
+      .you-bounce-animation {
+        animation: you-bounce 0.15s;
+        animation-direction: alternate;
+        animation-iteration-count: 2;
+      }
+      
+      .loader {
+        position: relative;
+        height: 16px;
+        width: 16px;
+        border-radius: 1em;
+      }
+      
+      .loader:before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 5em;
+        width: 5em;
+        border-style: solid;
+        border-color: rgb(139, 92, 71);
+        border-width: 0;
+        border-radius: 50%;
+        opacity: 0;
+        animation: outer-loader 500ms 1; 
+      }
+
+      @keyframes outer-loader {
+        0% {
+          height: 1em;
+          width: 1em;
+          margin: -0.5em;
+          opacity: 1;
+          border-width: 0; 
+        }
+        
+        100% {
+          height: 3em;
+          width: 3em;
+          margin: -3em;
+          opacity: 0;
+          border-width: 1.5em; 
+        } 
+      }
+
   </style>
 </head>
 <body>
@@ -126,12 +205,19 @@
     <div id="hand-container">
       <div id="image-wrapper">
         <img id="image" src="handje-iets-groter.PNG">
-        <div id="neutralize-circle"></div>
+        <div id="neutralize-circle">
+          <div style="position: relative;">
+            <div id="pulse-wrapper">
+              <div id="pulse" class="loader"></div>
+            </div>    
+          </div>
+        </div>
       </div>
     </div>
-  
+
     <script>
-        const wrapper = document.getElementById('wrapper');
+        const pulseWrapper = document.getElementById('pulse-wrapper');
+        const pulse = document.getElementById('pulse');
         
         const image = document.getElementById('image');
         const imageWrapper = document.getElementById('image-wrapper');
@@ -154,46 +240,60 @@
         let youScore = 0;
         let meScore = 0;
 
-        const mainLoop = setInterval(() => {
-          // You do 100 - the size of the hand to make sure that the hand is always in the screen
-          imageWrapper.style.left = getRandomInt(100 - sizeOfHand) + '%';
-          imageWrapper.style.top = getRandomInt(100 - sizeOfHand) + '%';
+        let mainLoop;
 
-          setTimeout(() => {
-            if (getRandomInt(10) % 2 === 0) {
-              imageWrapper.style.left = '-150%';
-            } else {
-              imageWrapper.style.left = '150%';
-            }
+        const startGame = () => {
+          mainLoop = setInterval(() => {
+            // You do 100 - the size of the hand to make sure that the hand is always in the screen
+            imageWrapper.style.left = getRandomInt(100 - sizeOfHand) + '%';
+            imageWrapper.style.top = getRandomInt(100 - sizeOfHand) + '%';
+            
+            me.classList.remove('me-bounce-animation');
+            you.classList.remove('you-bounce-animation');
+            
+            // TODO: find a better spot
+            pulse.classList.remove('loader');
 
-            if (getRandomInt(10) % 2 === 0) {
-              imageWrapper.style.top = getRandomInt(150) + '%';
-            } else {
-              imageWrapper.style.top = '-' + getRandomInt(150) + '%';
-            }
-            // Use set time out to increase the score only when the hand moved out of the screen
             setTimeout(() => {
-              if (neutralize === false) {
-                meScore += 1;
-                me.innerHTML = meScore;
+              if (getRandomInt(10) % 2 === 0) {
+                imageWrapper.style.left = '-150%';
+              } else {
+                imageWrapper.style.left = '150%';
               }
 
-              if (youScore === 6) {
-                youCongrats.style.display = 'flex';
-                clearInterval(mainLoop);
+              if (getRandomInt(10) % 2 === 0) {
+                imageWrapper.style.top = getRandomInt(150) + '%';
+              } else {
+                imageWrapper.style.top = '-' + getRandomInt(150) + '%';
               }
+              // Use set time out to increase the score only when the hand moved out of the screen
+              setTimeout(() => {
+                if (neutralize === false) {
+                  meScore += 1;
+                  me.innerHTML = meScore;
 
-              if (meScore === 6) {
-                meCongrats.style.display = 'flex';
-                clearInterval(mainLoop);
-              }
+                  me.classList.add('me-bounce-animation');
+                }
 
-              neutralize = false;
-            }, 200);
-          }, reactionTime);
+                if (youScore === 6) {
+                  youCongrats.style.display = 'flex';
+                  stopTheGame();
+                }
 
-        }, 6000);
+                if (meScore === 6) {
+                  meCongrats.style.display = 'flex';
+                  stopTheGame();
+                }
 
+                neutralize = false;
+              }, 200);
+            }, reactionTime);
+
+          }, 6000);
+        }
+
+        startGame();
+      
         let transitionTime = 1000;
 
         const handleNeutralize = (event) => {
@@ -204,27 +304,50 @@
             neutralize = true;
 
             switch (youScore) {
-                case 1:
-                  reactionTime -= 500;
-                  transitionTime -= 100;
-                  break;
-                case 2:
-                  reactionTime -= 150;
-                  transitionTime -= 50;
-                  break;
-                case 3:
-                  reactionTime -= 150;
-                  transitionTime -= 50;
-                  break;
-                case 4:
-                  reactionTime -= 150;
-                  transitionTime -= 50;
-                  break;
-                case 5:
-                  reactionTime -= 100;
-                  transitionTime -= 0;
-                  break;
-              }
+              case 1:
+                reactionTime -= 300;
+                transitionTime -= 100;
+                break;
+              case 2:
+                reactionTime -= 150;
+                transitionTime -= 50;
+                break;
+              case 3:
+                reactionTime -= 150;
+                transitionTime -= 50;
+                break;
+              case 4:
+                reactionTime -= 100;
+                transitionTime -= 50;
+                break;
+              case 5:
+                reactionTime -= 50;
+                transitionTime -= 0;
+                break;
+            }
+
+            you.classList.add('you-bounce-animation');
+
+            pulseWrapper.style.display = 'block';
+            var rect = event.target.getBoundingClientRect();
+            let x, y;
+
+            var touches = event.touches;
+
+            if (touches) {
+              const touch = touches[0];
+              x = touch.pageX;
+              y = touch.pageY;
+            } else {
+              x = event.clientX;
+              y = event.clientY;
+            }
+            
+
+            pulseWrapper.style.left = x - rect.left - 8;
+            pulseWrapper.style.top = y - rect.top - 8;
+
+            pulse.classList.add('loader');
           }
 
           imageWrapper.style.transition = `all ${transitionTime}ms ease`;
@@ -233,6 +356,9 @@
           event.preventDefault();
           event.stopPropagation();
         };
+
+        neutralizeCircle.addEventListener('touchstart', handleNeutralize, false);
+        neutralizeCircle.addEventListener('mousedown', handleNeutralize, false);
 
         const setHandSizeBasedOnScreenSize = () => {
           const screenWidth = document.body.clientWidth;
@@ -254,13 +380,15 @@
               event.preventDefault()
             }
           }, false);
-        
-          neutralizeCircle.addEventListener('touchstart', handleNeutralize, false);
-          neutralizeCircle.addEventListener('mousedown', handleNeutralize, false);
 
           image.setAttribute('draggable', false);
         }
+
         disableZoomAndDragAbilities();
+
+        const stopTheGame = () => {
+          clearInterval(mainLoop);
+        }
 
         const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
     </script>
