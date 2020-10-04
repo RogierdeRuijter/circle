@@ -278,12 +278,12 @@
 
                 if (youScore === 6) {
                   youCongrats.style.display = 'flex';
-                  clearInterval(mainLoop);
+                  stopTheGame();
                 }
 
                 if (meScore === 6) {
                   meCongrats.style.display = 'flex';
-                  clearInterval(mainLoop);
+                  stopTheGame();
                 }
 
                 neutralize = false;
@@ -401,6 +401,10 @@
         }
 
         disableZoomAndDragAbilities();
+
+        const stopTheGame = () => {
+          clearInterval(mainLoop);
+        }
 
         const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
     </script>
