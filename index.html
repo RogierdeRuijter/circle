@@ -115,19 +115,17 @@
       #pulse-wrapper {
         position: absolute;
         display: none;
-        top: 500px;
-        left: 500px;
         z-index: -1;
       }
 
       @keyframes me-bounce { 
         0% { transform: translateY(0); }
-        100% { transform: translateY(15px); }
+        100% { transform: translateY(10px); }
       }
 
       @keyframes you-bounce { 
         0% { transform: translateY(0); }
-        100% { transform: translateY(-15px); }
+        100% { transform: translateY(-10px); }
       }
 
       .me-bounce-animation {
@@ -332,18 +330,6 @@
 
             pulseWrapper.style.display = 'block';
             var rect = event.target.getBoundingClientRect();
-            console.group('click cordinates')
-            
-            console.log('rect');
-            console.log(rect);
-
-            console.log('event.clientX');
-            console.log(event.clientX);
-            
-            console.log('event.clientX - rect.x');
-            console.log(event.clientX - rect.x)
-
-            console.groupEnd();
             let x, y;
 
             var touches = event.touches;
