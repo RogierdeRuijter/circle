@@ -298,7 +298,8 @@
         let transitionTime = 1000;
 
         const handleNeutralize = (event) => {
-          if (neutralize === false) { 
+          requestAnimationFrame(() => {
+            if (neutralize === false) { 
             youScore += 1;
             
             you.innerHTML = youScore;
@@ -366,6 +367,7 @@
           // Stop the event from progating and the user to able to zoom/drag the image
           event.preventDefault();
           event.stopPropagation();
+          });
         };
 
         neutralizeCircle.addEventListener('touchstart', handleNeutralize, false);
