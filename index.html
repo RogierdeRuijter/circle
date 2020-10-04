@@ -290,7 +290,6 @@
                 neutralize = false;
               }, 200);
             }, reactionTime);
-
           }, 6000);
         }
 
@@ -307,7 +306,12 @@
 
             switch (youScore) {
               case 1:
-                reactionTime -= 300;
+                if (supportsTouch) {
+                  reactionTime -= 500;
+                } else {
+                  reactionTime -= 300;
+                }
+                
                 transitionTime -= 100;
                 break;
               case 2:
@@ -398,6 +402,8 @@
         }
 
         const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
+
+        const supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
     </script>
 </body>
 </html>
