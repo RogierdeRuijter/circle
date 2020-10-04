@@ -105,16 +105,6 @@
         margin-top: 10px;
       }
 
-      @keyframes bounce { 
-        0% { transform: translateY(0); }
-        100% { transform: translateY(-5px); }
-      }
-
-      @keyframes you-bounce { 
-        0% { transform: translateY(0); }
-        100% { transform: translateY(-10px); }
-      }
-
       #you-score {
         display: inline-block;
       }
@@ -131,14 +121,24 @@
         z-index: -1;
       }
 
-      .you-bounce-animation {
-        animation: you-bounce 0.15s;
+      @keyframes me-bounce { 
+        0% { transform: translateY(0); }
+        100% { transform: translateY(15px); }
+      }
+
+      @keyframes you-bounce { 
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-15px); }
+      }
+
+      .me-bounce-animation {
+        animation: me-bounce 0.15s;
         animation-direction: alternate;
         animation-iteration-count: 2;
       }
 
-      .bounce-animation {
-        animation: bounce 0.15s;
+      .you-bounce-animation {
+        animation: you-bounce 0.15s;
         animation-direction: alternate;
         animation-iteration-count: 2;
       }
@@ -217,6 +217,7 @@
         </div>
       </div>
     </div>
+
     <script>
         const pulseWrapper = document.getElementById('pulse-wrapper');
         const pulse = document.getElementById('pulse');
@@ -242,14 +243,15 @@
         let youScore = 0;
         let meScore = 0;
 
-        let mainLoop
+        let mainLoop;
+
         const startGame = () => {
           mainLoop = setInterval(() => {
             // You do 100 - the size of the hand to make sure that the hand is always in the screen
             imageWrapper.style.left = getRandomInt(100 - sizeOfHand) + '%';
             imageWrapper.style.top = getRandomInt(100 - sizeOfHand) + '%';
             
-            me.classList.remove('bounce-animation');
+            me.classList.remove('me-bounce-animation');
             you.classList.remove('you-bounce-animation');
             
             // TODO: find a better spot
@@ -273,7 +275,7 @@
                   meScore += 1;
                   me.innerHTML = meScore;
 
-                  me.classList.add('bounce-animation');
+                  me.classList.add('me-bounce-animation');
                 }
 
                 if (youScore === 6) {
@@ -306,7 +308,7 @@
 
             switch (youScore) {
               case 1:
-                reactionTime -= 500;
+                reactionTime -= 300;
                 transitionTime -= 100;
                 break;
               case 2:
