@@ -215,6 +215,8 @@
       </div>
     </div>
 
+    <audio id="tapSound" src="./tap.wav"></audio>
+
     <script>
         const pulseWrapper = document.getElementById('pulse-wrapper');
         const pulse = document.getElementById('pulse');
@@ -343,11 +345,16 @@
               y = event.clientY;
             }
             
-
             pulseWrapper.style.left = x - rect.left - 8;
             pulseWrapper.style.top = y - rect.top - 8;
 
             pulse.classList.add('loader');
+
+            try {
+              document.getElementById('tapSound').play();
+            } catch (e) {
+              console.log('cant play audio yet');
+            }
           }
 
           imageWrapper.style.transition = `all ${transitionTime}ms ease`;
