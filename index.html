@@ -215,10 +215,22 @@
       </div>
     </div>
 
-    <audio id="tap-sound" src="./tap.wav"></audio>
-    <audio id="victory-sound" src="./victory.wav"></audio>
-    <audio id="defeat-sound" src="./defeat.wav"></audio>
-    <audio id="quack-sound" src="./quack.wav"></audio>
+    <audio id="tap-sound">
+      <source src="./tap.wav" type="audio/wav"/>
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="victory-sound">
+      <source src="./victory.wav" type="audio/wav" />
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="defeat-sound">
+      <source src="./defeat.wav" type="audio/wav" />
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="quack-sound">
+      <source src="./quack.wav" type="audio/wav" />
+      Your browser does not support the audio element.
+    </audio>
 
     <script>
         const pulseWrapper = document.getElementById('pulse-wrapper');
