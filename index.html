@@ -258,9 +258,6 @@
         let youScore = 0;
         let meScore = 0;
 
-        document.getElementById('tap-sound').play();
-        document.getElementById('tap-sound').pause();
-
         let mainLoop;
 
         const startGame = () => {
@@ -398,7 +395,9 @@
             pulse.classList.add('loader');
 
             try {
-              document.getElementById('tap-sound').play();
+              setTimeout(() => {
+                document.getElementById('tap-sound').play();
+              }, 500)
             } catch (e) {
               console.log('cant play audio yet');
             }
