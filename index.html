@@ -156,7 +156,8 @@
         height: 5em;
         width: 5em;
         border-style: solid;
-        border-color: rgb(139, 92, 71);
+        /* border-color: rgb(139, 92, 71); */
+        border-color: green;
         border-width: 0;
         border-radius: 50%;
         opacity: 0;
@@ -233,11 +234,11 @@
     </audio>
 
     <script>
+        const imageWrapper = document.getElementById('image-wrapper');
+        const image = document.getElementById('image');
+
         const pulseWrapper = document.getElementById('pulse-wrapper');
         const pulse = document.getElementById('pulse');
-        
-        const image = document.getElementById('image');
-        const imageWrapper = document.getElementById('image-wrapper');
         
         const neutralizeCircle = document.getElementById('neutralize-circle');
 
@@ -273,16 +274,18 @@
             pulse.classList.remove('loader');
 
             setTimeout(() => {
-              if (getRandomInt(10) % 2 === 0) {
-                imageWrapper.style.left = '-150%';
-              } else {
-                imageWrapper.style.left = '150%';
-              }
+              if (neutralize === false) {
+                if (getRandomInt(10) % 2 === 0) {
+                  imageWrapper.style.left = '-150%';
+                } else {
+                  imageWrapper.style.left = '150%';
+                }
 
-              if (getRandomInt(10) % 2 === 0) {
-                imageWrapper.style.top = getRandomInt(150) + '%';
-              } else {
-                imageWrapper.style.top = '-' + getRandomInt(150) + '%';
+                if (getRandomInt(10) % 2 === 0) {
+                  imageWrapper.style.top = getRandomInt(150) + '%';
+                } else {
+                  imageWrapper.style.top = '-' + getRandomInt(150) + '%';
+                }
               }
               // Use set time out to increase the score only when the hand moved out of the screen
               setTimeout(() => {
@@ -312,7 +315,7 @@
                 neutralize = false;
               }, 200);
             }, reactionTime);
-          }, 6000);
+          }, 5000);
         }
 
         startGame();
@@ -322,10 +325,10 @@
         const handleNeutralize = (event) => {
           requestAnimationFrame(() => {
             if (neutralize === false) { 
-            youScore += 1;
-            
-            you.innerHTML = youScore;
             neutralize = true;
+
+            youScore += 1;
+            you.innerHTML = youScore;
 
             switch (youScore) {
               case 1:
@@ -369,7 +372,6 @@
                 reactionTime -= 50;
                 transitionTime -= 50;
               break;
-
             }
 
             you.classList.add('you-bounce-animation');
