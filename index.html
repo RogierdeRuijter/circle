@@ -194,7 +194,7 @@
     </div>
 
     <div id="me-congrats" class="celebration-container">
-      <div id="me-celebration-title">HaHa, I won better luck next time 🐒</div>
+      <div id="me-celebration-title">I won better luck next time 🐒</div>
     </div>
 
     <div id="score-container">
@@ -213,9 +213,7 @@
         <img id="image" src="handje-iets-groter.PNG">
         <div id="neutralize-circle">
           <div style="position: relative;">
-            <div id="pulse-wrapper">
-              <!-- <div id="pulse" class="loader"></div> -->
-            </div>    
+            <div id="pulse-wrapper"></div>    
           </div>
         </div>
       </div>
@@ -291,7 +289,7 @@
                 neutralized = false;
               }, 200);
             }, reactionTime);
-          }, 5000);
+          }, 4000);
         }
         startGame();
       
@@ -350,7 +348,6 @@
             
           const topCurrent = imageWrapperState.top - handContainerState.top;
           const leftCurrent = imageWrapperState.left - handContainerState.left;
-
 
           imageWrapper.style.left = leftCurrent;
           imageWrapper.style.top = topCurrent;
