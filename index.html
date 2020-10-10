@@ -135,18 +135,6 @@
         100% { transform: translateY(-10px); }
       }
 
-      /* .me-bounce-animation {
-        animation: me-bounce 0.15s;
-        animation-direction: alternate;
-        animation-iteration-count: 2;
-      }
-
-      .you-bounce-animation {
-        animation: you-bounce 0.15s;
-        animation-direction: alternate;
-        animation-iteration-count: 2;
-      } */
-
       .fade-out {
         -webkit-transition: opacity 1s ease-in-out;
         -moz-transition: opacity 1s ease-in-out;
@@ -279,12 +267,7 @@
         const startGame = () => {
           mainLoop = setInterval(() => {
             moveHandInScreen();
-            
-            // me.classList.remove('me-bounce-animation');
-            // you.classList.remove('you-bounce-animation');
-            
-            // TODO: find a better spot
-            // pulse.classList.remove('loader');
+            // TODO: rename pulse wrapper to dot container or something
             pulseWrapper.style.display = 'none';
             imageWrapper.classList.remove('fade-out');
 
@@ -404,8 +387,6 @@
             
           pulseWrapper.style.left = x - rect.left - 5;
           pulseWrapper.style.top = y - rect.top -5;
-
-          // pulse.classList.add('loader');
         }
 
         const handHasnotBeenNeutralizedYet = () => neutralized === false;
@@ -472,15 +453,11 @@
           if (meScore !== winningScore) {
             document.getElementById('quack-sound').play();
           }
-
-          // me.classList.add('me-bounce-animation');
         }
 
         const setNewYouScore = () => {
           youScore += 1;
           you.innerHTML = youScore;
-
-          // you.classList.add('you-bounce-animation');
 
           try {
               document.getElementById('tap-sound').play();
