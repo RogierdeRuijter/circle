@@ -136,18 +136,6 @@
         100% { transform: translateY(-10px); }
       }
 
-      .me-bounce-animation {
-        animation: me-bounce 0.15s;
-        animation-direction: alternate;
-        animation-iteration-count: 2;
-      }
-
-      .you-bounce-animation {
-        animation: you-bounce 0.15s;
-        animation-direction: alternate;
-        animation-iteration-count: 2;
-      }
-
       .fade-out {
         -webkit-transition: opacity 1s ease-in-out;
         -moz-transition: opacity 1s ease-in-out;
@@ -249,6 +237,8 @@
     </audio>
 
     <script>
+        const handContainer = document.getElementById('hand-container');
+
         const imageWrapper = document.getElementById('image-wrapper');
         const image = document.getElementById('image');
 
@@ -278,12 +268,7 @@
         const startGame = () => {
           mainLoop = setInterval(() => {
             moveHandInScreen();
-            
-            me.classList.remove('me-bounce-animation');
-            you.classList.remove('you-bounce-animation');
-            
-            // TODO: find a better spot
-            // pulse.classList.remove('loader');
+            // TODO: rename pulse wrapper to dot container or something
             pulseWrapper.style.display = 'none';
             imageWrapper.classList.remove('fade-out');
 
@@ -359,10 +344,15 @@
         const stopMovingTheHand = () => {
           const currentImageWrapperState = imageWrapper.getBoundingClientRect();
 
-          // console.log(imageWrapper.getBoundingClientRect());
+          var handContainerState = handContainer.getBoundingClientRect(),
+              imageWrapperState = imageWrapper.getBoundingClientRect(),
+            
+              topCurrent = imageWrapperState.top - handContainerState.top;
+              leftCurrent = imageWrapperState.left - handContainerState.left;
 
-          // imageWrapper.style.left = Math.round(currentImageWrapperState.left);
-          // imageWrapper.style.top = Math.round(currentImageWrapperState.top);
+
+          imageWrapper.style.left = leftCurrent;
+          imageWrapper.style.top = topCurrent;
         }
 
         const updateUiScoreElementsBasedOnWinner = () => {
@@ -398,8 +388,6 @@
             
           pulseWrapper.style.left = x - rect.left - 5;
           pulseWrapper.style.top = y - rect.top -5;
-
-          // pulse.classList.add('loader');
         }
 
         const handHasnotBeenNeutralizedYet = () => neutralized === false;
@@ -450,11 +438,13 @@
         }
 
         const fadeOutTheHand = () => {
-          imageWrapper.classList.add('fade-out');
+          setTimeout(() => {
+            imageWrapper.classList.add('fade-out');
+          }, 300);
 
           setTimeout(() => {
             moveHandOutOfScreen();
-          }, 1000)
+          }, 1300)
         }
 
         const setNewMeScore = () => {
@@ -464,15 +454,11 @@
           if (meScore !== winningScore) {
             document.getElementById('quack-sound').play();
           }
-
-          me.classList.add('me-bounce-animation');
         }
 
         const setNewYouScore = () => {
           youScore += 1;
           you.innerHTML = youScore;
-
-          you.classList.add('you-bounce-animation');
 
           try {
               document.getElementById('tap-sound').play();
