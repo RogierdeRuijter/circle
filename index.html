@@ -56,7 +56,6 @@
 
       #neutralize-circle {
         position: absolute;
-        overflow: hidden;
         width: 17%;
         height: 22%;
         left: 44%;
@@ -75,8 +74,12 @@
         flex-direction: row;
       }
 
-      .celebration-title {
-        font-size: 40px;
+      #me-celebration-title {
+        font-size: 6vw;
+      }
+
+      #you-celebration-title {
+        font-size: 9vw;
       }
 
       #score-container {
@@ -187,11 +190,11 @@
 </head>
 <body>
     <div id="you-congrats" class="celebration-container">
-      <div class="celebration-title">You won, good job 🎉</div>
+      <div id="you-celebration-title">You won, good job 🎉</div>
     </div>
 
     <div id="me-congrats" class="celebration-container">
-      <div class="celebration-title">HaHa, I won better luck next time 🐒</div>
+      <div id="me-celebration-title">HaHa, I won better luck next time 🐒</div>
     </div>
 
     <div id="score-container">
@@ -258,6 +261,7 @@
         const winningScore = 10;
 
         let reactionTime = 1750;
+        let transitionTime = 1000;
 
         let youScore = 0;
         let meScore = 0;
@@ -282,7 +286,7 @@
                   setNewMeScore();
                 }
                 
-                updateUiScoreElementsBasedOnWinner();
+                checkIfTheGameIsFinished();
 
                 neutralized = false;
               }, 200);
@@ -291,8 +295,6 @@
         }
         startGame();
       
-        let transitionTime = 1000;
-
         const handleNeutralize = (event) => {
           requestAnimationFrame(() => {
             if (handHasnotBeenNeutralizedYet()) { 
@@ -306,7 +308,7 @@
             
             setNewReactionAndTranstionTimes();
             
-            setPulseAnimationAtLocationOfClick(event);
+            showClickCircle(event);
             // TODO: figure out why is this done
             imageWrapper.style.transition = `all ${transitionTime}ms ease`;
           }
@@ -343,18 +345,18 @@
         const stopMovingTheHand = () => {
           const currentImageWrapperState = imageWrapper.getBoundingClientRect();
 
-          var handContainerState = handContainer.getBoundingClientRect(),
-              imageWrapperState = imageWrapper.getBoundingClientRect(),
+          const handContainerState = handContainer.getBoundingClientRect();
+          const imageWrapperState = imageWrapper.getBoundingClientRect();
             
-              topCurrent = imageWrapperState.top - handContainerState.top;
-              leftCurrent = imageWrapperState.left - handContainerState.left;
+          const topCurrent = imageWrapperState.top - handContainerState.top;
+          const leftCurrent = imageWrapperState.left - handContainerState.left;
 
 
           imageWrapper.style.left = leftCurrent;
           imageWrapper.style.top = topCurrent;
         }
 
-        const updateUiScoreElementsBasedOnWinner = () => {
+        const checkIfTheGameIsFinished = () => {
           if (youScore === winningScore) {
             youCongrats.style.display = 'flex';
             document.getElementById('victory-sound').play();
@@ -368,7 +370,7 @@
           }
         };
 
-        const setPulseAnimationAtLocationOfClick = (event) => {
+        const showClickCircle = (event) => {
           pulseWrapper.style.display = 'block';
 
           var rect = event.target.getBoundingClientRect();
@@ -386,7 +388,7 @@
           }
             
           pulseWrapper.style.left = x - rect.left - 5;
-          pulseWrapper.style.top = y - rect.top -5;
+          pulseWrapper.style.top = y - rect.top - 5;
         }
 
         const handHasnotBeenNeutralizedYet = () => neutralized === false;
