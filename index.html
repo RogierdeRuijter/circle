@@ -394,15 +394,11 @@
         const setNewReactionAndTranstionTimes = () => {
           switch (youScore) {
               case 1:
-                if (supportsTouch) {
-                  reactionTime -= 200;
-                } else {
-                  reactionTime -= 100;
-                }
-                transitionTime -= 100;
+                reactionTime -= 50;
+                // transitionTime -= 100;
                 break;
               case 2:
-                reactionTime -= 100;
+                reactionTime -= 50;
                 transitionTime -= 50;
                 break;
               case 3:
