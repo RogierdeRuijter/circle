@@ -47,7 +47,8 @@
         position: relative;
         display: inline-block;
 
-        transition: all 1s ease;
+        transition: left top 1s ease;
+        /* transition: top 1s ease; */
         
         left: -150%;
         /* left: 50%; */
@@ -140,11 +141,11 @@
       }
 
       .fade-out {
-        -webkit-transition: opacity 1s ease-in-out;
-        -moz-transition: opacity 1s ease-in-out;
-        -ms-transition: opacity 1s ease-in-out;
-        -o-transition: opacity 1s ease-in-out;
-        transition: opacity 1s ease-in-out;
+        -webkit-transition: opacity 500ms ease-out;
+        -moz-transition: opacity 500ms ease-out;
+        -ms-transition: opacity 500ms ease-out;
+        -o-transition: opacity 500ms ease-out;
+        transition: opacity 500ms ease-out;
         opacity: 0;
       }
       
@@ -258,7 +259,7 @@
         const sizeOfHand = 35;
         const winningScore = 10;
 
-        let reactionTime = 1750;
+        let reactionTime = 1000;
         let transitionTime = 2000;
 
         let youScore = 0;
@@ -308,7 +309,7 @@
             setNewReactionAndTranstionTimes();
             
             // TODO: figure out why is this done
-            imageWrapper.style.transition = `all ${transitionTime}ms ease`;
+            imageWrapper.style.transition = `left top ${transitionTime}ms ease`;
           }
 
           // Stop the event from progating and the user to able to zoom/drag the image
@@ -401,23 +402,23 @@
                 transitionTime -= 100;
                 break;
               case 2:
-                reactionTime -= 150;
+                reactionTime -= 100;
                 transitionTime -= 50;
                 break;
               case 3:
-                reactionTime -= 150;
+                reactionTime -= 50;
                 transitionTime -= 50;
                 break;
               case 4:
-                reactionTime -= 100;
+                reactionTime -= 50;
                 transitionTime -= 50;
                 break;
               case 5:
-                reactionTime -= 100;
+                reactionTime -= 50;
                 transitionTime -= 50;
                 break;
               case 6:
-                reactionTime -= 100;
+                reactionTime -= 50;
                 transitionTime -= 50;
                 break;
               case 7:
@@ -436,9 +437,9 @@
         }
 
         const fadeOutTheHand = () => {
-          setTimeout(() => {
+          // setTimeout(() => {
             imageWrapper.classList.add('fade-out');
-          }, 300);
+          // }, 300);
 
           setTimeout(() => {
             moveHandOutOfScreen();
