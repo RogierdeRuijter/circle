@@ -60,6 +60,7 @@
         height: 22%;
         left: 44%;
         top: 38%;
+        /* border: 1px solid black; */
       }
 
       .celebration-container {
@@ -117,10 +118,10 @@
         display: inline-block;
       }
 
-      #pulse-wrapper {
+      #dot {
         position: absolute;
         display: none;
-        z-index: -1;
+        z-index: 2;
         width: 10px;
         height: 10px;
         background-color: white;
@@ -194,7 +195,7 @@
     </div>
 
     <div id="me-congrats" class="celebration-container">
-      <div id="me-celebration-title">I won better luck next time 🐒</div>
+      <div id="me-celebration-title">I won, better luck next time 🐒</div>
     </div>
 
     <div id="score-container">
@@ -213,7 +214,7 @@
         <img id="image" src="handje-iets-groter.PNG">
         <div id="neutralize-circle">
           <div style="position: relative;">
-            <div id="pulse-wrapper"></div>    
+            <div id="dot"></div>    
           </div>
         </div>
       </div>
@@ -242,8 +243,7 @@
         const imageWrapper = document.getElementById('image-wrapper');
         const image = document.getElementById('image');
 
-        const pulseWrapper = document.getElementById('pulse-wrapper');
-        const pulse = document.getElementById('pulse');
+        const dot = document.getElementById('dot');
         
         const neutralizeCircle = document.getElementById('neutralize-circle');
 
@@ -259,7 +259,7 @@
         const winningScore = 10;
 
         let reactionTime = 1750;
-        let transitionTime = 1000;
+        let transitionTime = 2000;
 
         let youScore = 0;
         let meScore = 0;
@@ -270,7 +270,7 @@
           mainLoop = setInterval(() => {
             moveHandInScreen();
             // TODO: rename pulse wrapper to dot container or something
-            pulseWrapper.style.display = 'none';
+            dot.style.display = 'none';
             imageWrapper.classList.remove('fade-out');
 
             setTimeout(() => {
@@ -301,12 +301,12 @@
             setNewYouScore();
             
             stopMovingTheHand();
+            showClickCircle(event);
 
             fadeOutTheHand();
             
             setNewReactionAndTranstionTimes();
             
-            showClickCircle(event);
             // TODO: figure out why is this done
             imageWrapper.style.transition = `all ${transitionTime}ms ease`;
           }
@@ -368,9 +368,9 @@
         };
 
         const showClickCircle = (event) => {
-          pulseWrapper.style.display = 'block';
+          dot.style.display = 'block';
 
-          var rect = event.target.getBoundingClientRect();
+          const coordinatesNeutralizeCircle = neutralizeCircle.getBoundingClientRect();
           let x, y;
           
           var touches = event.touches;
@@ -384,8 +384,8 @@
             y = event.clientY;
           }
             
-          pulseWrapper.style.left = x - rect.left - 5;
-          pulseWrapper.style.top = y - rect.top - 5;
+          dot.style.left = x - coordinatesNeutralizeCircle.left - 5;
+          dot.style.top = y - coordinatesNeutralizeCircle.top - 5;
         }
 
         const handHasnotBeenNeutralizedYet = () => neutralized === false;
