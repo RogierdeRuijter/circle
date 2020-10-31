@@ -46,12 +46,10 @@
       #image-wrapper {
         position: relative;
         display: inline-block;
-
-        transition: left top 1s ease;
-        /* transition: top 1s ease; */
         
         left: -150%;
         /* left: 50%; */
+        
         top: 54%;
         opacity: 0;
       }
@@ -259,7 +257,7 @@
         const newTryTime = 4000;
         const fadeOutHandTime = 500;
         let reactionTimeForPlayer = 1000;
-        let transitionTime = 2000;
+        let transitionTime = 500;
 
         const sizeOfHand = 35;
         const winningScore = 10;
@@ -294,10 +292,19 @@
               
               checkIfTheGameIsFinished();
 
+              applyCurrentTranstionTimes();
+
               neutralized = false;
             }, timeTheHandNeedsToMoveOutOfTheScreen);
           }, reactionTimeForPlayer);
-        }
+        };
+
+        const applyCurrentTranstionTimes = () => {
+          console.log('applyCurrentTranstionTimes');
+          console.log(transitionTime);
+          imageWrapper.style.webkitTransition = `opacity ${transitionTime}ms ease-in-out;`;
+          imageWrapper.style.transition = `opacity ${transitionTime}ms ease-in-out;`;
+        };
       
         const handleNeutralize = (event) => {
           requestAnimationFrame(() => {
