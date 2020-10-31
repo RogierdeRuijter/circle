@@ -199,18 +199,18 @@
     </div>
 
     <div id="me-congrats" class="celebration-container">
-      <div id="me-celebration-title">Mia won, better luck next time 👱‍♀️</div>
+      <div id="me-celebration-title">👱‍♀️ won, better luck next time </div>
     </div>
 
     <div id="score-container">
       <div id="you-container">
-        👤 <span id="you-score" class="bigger">0</span><span></span>
+        👤 <span id="you-score" class="bigger">10</span><span></span>
       </div>
       <div id="vs">
-        <span class="small">you vs Mia</span>
+        <span class="small">vs</span>
       </div>
       <div id="me-container">
-        <span id="me-score" class="bigger">0</span><span></span> 👱‍♀️
+        <span id="me-score" class="bigger">10</span><span></span> 👱‍♀
       </div>
     </div>
 
@@ -265,12 +265,12 @@
         let transitionTime = 500;
 
         const sizeOfHand = 35;
-        const winningScore = 10;
+        const winningScore = 0;
         
         let neutralized = false;
 
-        let youScore = 0;
-        let meScore = 0;
+        let youScore = 10;
+        let meScore = 10;
 
         let mainLoop;
 
@@ -401,27 +401,11 @@
 
         const setNewReactionAndTranstionTimes = () => {
           switch (youScore) {
-              case 1:
+              case 9:
                 reactionTimeForPlayer -= 50;
                 // transitionTime -= 100;
                 break;
-              case 2:
-                reactionTimeForPlayer -= 50;
-                transitionTime -= 50;
-                break;
-              case 3:
-                reactionTimeForPlayer -= 50;
-                transitionTime -= 50;
-                break;
-              case 4:
-                reactionTimeForPlayer -= 50;
-                transitionTime -= 50;
-                break;
-              case 5:
-                reactionTimeForPlayer -= 50;
-                transitionTime -= 50;
-                break;
-              case 6:
+              case 8:
                 reactionTimeForPlayer -= 50;
                 transitionTime -= 50;
                 break;
@@ -429,11 +413,27 @@
                 reactionTimeForPlayer -= 50;
                 transitionTime -= 50;
                 break;
-              case 8:
+              case 6:
                 reactionTimeForPlayer -= 50;
                 transitionTime -= 50;
                 break;
-              case 9:
+              case 5:
+                reactionTimeForPlayer -= 50;
+                transitionTime -= 50;
+                break;
+              case 4:
+                reactionTimeForPlayer -= 50;
+                transitionTime -= 50;
+                break;
+              case 3:
+                reactionTimeForPlayer -= 50;
+                transitionTime -= 50;
+                break;
+              case 2:
+                reactionTimeForPlayer -= 50;
+                transitionTime -= 50;
+                break;
+              case 1:
                 reactionTimeForPlayer -= 50;
                 transitionTime -= 50;
               break;
@@ -445,17 +445,17 @@
         }
 
         const setNewMeScore = () => {
-          meScore += 1;
-          me.innerHTML = meScore;
+          youScore = youScore - 1;
+          you.innerHTML = youScore;
 
-          if (meScore !== winningScore) {
+          if (youScore !== winningScore) {
             document.getElementById('quack-sound').play();
           }
         }
 
         const setNewYouScore = () => {
-          youScore += 1;
-          you.innerHTML = youScore;
+          meScore = meScore - 1;
+          me.innerHTML = meScore;
 
           // TODO: this shoudn't be handled in this method
           //  This should done in the on click event
