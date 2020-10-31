@@ -300,8 +300,8 @@
         };
 
         const applyCurrentTranstionTimes = () => {
-          imageWrapper.style.webkitTransition = `opacity ${transitionTime}ms ease-in-out;`;
-          imageWrapper.style.transition = `opacity ${transitionTime}ms ease-in-out;`;
+          imageWrapper.style.webkitTransitionDuration = `${transitionTime}ms`;
+          imageWrapper.style.transitionDuration = `${transitionTime}ms`;
         };
       
         const handleNeutralize = (event) => {
