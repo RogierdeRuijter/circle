@@ -46,13 +46,12 @@
       #image-wrapper {
         position: relative;
         display: inline-block;
-
-        transition: left top 1s ease;
-        /* transition: top 1s ease; */
         
         left: -150%;
         /* left: 50%; */
+        
         top: 54%;
+        opacity: 0;
       }
 
       #neutralize-circle {
@@ -140,13 +139,12 @@
         100% { transform: translateY(-10px); }
       }
 
-      .fade-out {
-        -webkit-transition: opacity 500ms ease-out;
-        -moz-transition: opacity 500ms ease-out;
-        -ms-transition: opacity 500ms ease-out;
-        -o-transition: opacity 500ms ease-out;
-        transition: opacity 500ms ease-out;
-        opacity: 0;
+      .fade {
+        -webkit-transition: opacity 500ms ease-in-out;
+        -moz-transition: opacity 500ms ease-in-out;
+        -ms-transition: opacity 500ms ease-in-out;
+        -o-transition: opacity 500ms ease-in-out;
+        transition: opacity 500ms ease-in-out;
       }
       
       .loader {
@@ -211,7 +209,7 @@
     </div>
 
     <div id="hand-container">
-      <div id="image-wrapper">
+      <div id="image-wrapper" class="fade">
         <img id="image" src="handje-iets-groter.PNG">
         <div id="neutralize-circle">
           <div style="position: relative;">
@@ -253,14 +251,17 @@
 
         const youCongrats = document.getElementById('you-congrats');
         const meCongrats = document.getElementById('me-congrats');
-
-        let neutralized = false;
         
+        const timeTheHandNeedsToMoveOutOfTheScreen = 200;
+        const newTryTime = 4000;
+        const fadeOutHandTime = 500;
+        let reactionTimeForPlayer = 1000;
+        let transitionTime = 500;
+
         const sizeOfHand = 35;
         const winningScore = 10;
-
-        let reactionTime = 1000;
-        let transitionTime = 2000;
+        
+        let neutralized = false;
 
         let youScore = 0;
         let meScore = 0;
@@ -270,46 +271,56 @@
         const startGame = () => {
           mainLoop = setInterval(() => {
             moveHandInScreen();
-            // TODO: rename pulse wrapper to dot container or something
-            dot.style.display = 'none';
-            imageWrapper.classList.remove('fade-out');
 
+            setTimersToHandleScoring();
+          }, newTryTime);
+        };
+        startGame();
+
+        const setTimersToHandleScoring = () => {
+          setTimeout(() => {
+            if (neutralized === false) {
+              moveHandOutOfScreen();
+            }
+            
+            // Increase the score only when the hand moved out of the screen
             setTimeout(() => {
               if (neutralized === false) {
-                moveHandOutOfScreen();
+                setNewMeScore();
               }
               
-              // Increase the score only when the hand moved out of the screen
-              setTimeout(() => {
-                if (neutralized === false) {
-                  setNewMeScore();
-                }
-                
-                checkIfTheGameIsFinished();
+              checkIfTheGameIsFinished();
 
-                neutralized = false;
-              }, 200);
-            }, reactionTime);
-          }, 4000);
-        }
-        startGame();
+              applyCurrentTranstionTimes();
+
+              neutralized = false;
+            }, timeTheHandNeedsToMoveOutOfTheScreen);
+          }, reactionTimeForPlayer);
+        };
+
+        const applyCurrentTranstionTimes = () => {
+          imageWrapper.style.webkitTransitionDuration = `${transitionTime}ms`;
+          imageWrapper.style.transitionDuration = `${transitionTime}ms`;
+        };
       
         const handleNeutralize = (event) => {
           requestAnimationFrame(() => {
             if (handHasnotBeenNeutralizedYet()) { 
-            neutralized = true;
-            
-            setNewYouScore();
-            
-            stopMovingTheHand();
-            showClickCircle(event);
+              neutralized = true;
+              
+              setNewYouScore();
+              
+              showClickCircle(event);
 
-            fadeOutTheHand();
+              fadeOutTheHand();
+
+              setTimeout(() => {
+                moveHandOutOfScreen();
+
+                dot.style.display = 'none';
+            }, fadeOutHandTime);
             
             setNewReactionAndTranstionTimes();
-            
-            // TODO: figure out why is this done
-            imageWrapper.style.transition = `left top ${transitionTime}ms ease`;
           }
 
           // Stop the event from progating and the user to able to zoom/drag the image
@@ -322,36 +333,27 @@
         neutralizeCircle.addEventListener('mousedown', handleNeutralize, false);
 
         const moveHandInScreen = () => {
+          addFadeInAnimation();
           // You do 100 - the size of the hand to make sure that the hand is always in the screen
-          imageWrapper.style.left = getRandomInt(100 - sizeOfHand) + '%';
-          imageWrapper.style.top = getRandomInt(100 - sizeOfHand) + '%';
+          // TODO: improve this algorithm
+          // Left has a small band with than top when the screen is portait
+          //  This is the other way around when the phone is in portrait 
+          imageWrapper.style.left = getRandomInt(100 - (sizeOfHand - 5)) + '%';
+          imageWrapper.style.top = getRandomInt(100 - (sizeOfHand - 5)) + '%';
+        }
+
+        const addFadeInAnimation = () => {
+          imageWrapper.style.opacity = 1;
         }
 
         const moveHandOutOfScreen = () => {
-          if (getRandomInt(10) % 2 === 0) {
-            imageWrapper.style.left = '-150%';
-          } else {
-            imageWrapper.style.left = '150%';
-          }
-
-          if (getRandomInt(10) % 2 === 0) {
-            imageWrapper.style.top = getRandomInt(150) + '%';
-          } else {
-            imageWrapper.style.top = '-' + getRandomInt(150) + '%';
-          }
+          resetFadeAnimation();
+          imageWrapper.style.left = '-150%';
+          imageWrapper.style.top = '-150%';
         }
 
-        const stopMovingTheHand = () => {
-          const currentImageWrapperState = imageWrapper.getBoundingClientRect();
-
-          const handContainerState = handContainer.getBoundingClientRect();
-          const imageWrapperState = imageWrapper.getBoundingClientRect();
-            
-          const topCurrent = imageWrapperState.top - handContainerState.top;
-          const leftCurrent = imageWrapperState.left - handContainerState.left;
-
-          imageWrapper.style.left = leftCurrent;
-          imageWrapper.style.top = topCurrent;
+        const resetFadeAnimation = () => {
+          imageWrapper.style.opacity = 0;
         }
 
         const checkIfTheGameIsFinished = () => {
@@ -394,52 +396,46 @@
         const setNewReactionAndTranstionTimes = () => {
           switch (youScore) {
               case 1:
-                reactionTime -= 50;
+                reactionTimeForPlayer -= 50;
                 // transitionTime -= 100;
                 break;
               case 2:
-                reactionTime -= 50;
+                reactionTimeForPlayer -= 50;
                 transitionTime -= 50;
                 break;
               case 3:
-                reactionTime -= 50;
+                reactionTimeForPlayer -= 50;
                 transitionTime -= 50;
                 break;
               case 4:
-                reactionTime -= 50;
+                reactionTimeForPlayer -= 50;
                 transitionTime -= 50;
                 break;
               case 5:
-                reactionTime -= 50;
+                reactionTimeForPlayer -= 50;
                 transitionTime -= 50;
                 break;
               case 6:
-                reactionTime -= 50;
+                reactionTimeForPlayer -= 50;
                 transitionTime -= 50;
                 break;
               case 7:
-                reactionTime -= 50;
+                reactionTimeForPlayer -= 50;
                 transitionTime -= 50;
                 break;
               case 8:
-                reactionTime -= 50;
+                reactionTimeForPlayer -= 50;
                 transitionTime -= 50;
                 break;
               case 9:
-                reactionTime -= 50;
+                reactionTimeForPlayer -= 50;
                 transitionTime -= 50;
               break;
             }
         }
 
         const fadeOutTheHand = () => {
-          // setTimeout(() => {
-            imageWrapper.classList.add('fade-out');
-          // }, 300);
-
-          setTimeout(() => {
-            moveHandOutOfScreen();
-          }, 1300)
+          imageWrapper.style.opacity = 0;
         }
 
         const setNewMeScore = () => {
@@ -455,6 +451,8 @@
           youScore += 1;
           you.innerHTML = youScore;
 
+          // TODO: this shoudn't be handled in this method
+          //  This should done in the on click event
           try {
               document.getElementById('tap-sound').play();
             } catch (e) {
@@ -494,7 +492,6 @@
           clearInterval(mainLoop);
         }
       
-
         const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
 
         const supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
