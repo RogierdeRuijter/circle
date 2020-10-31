@@ -252,7 +252,6 @@
         const youCongrats = document.getElementById('you-congrats');
         const meCongrats = document.getElementById('me-congrats');
         
-        // TOOD: get rid of the magic numbers in the settimeouts app
         const timeTheHandNeedsToMoveOutOfTheScreen = 200;
         const newTryTime = 4000;
         const fadeOutHandTime = 500;
@@ -318,9 +317,7 @@
               setTimeout(() => {
                 moveHandOutOfScreen();
 
-                // TODO: this was moved from the start game, check this still works properly here
                 dot.style.display = 'none';
-
             }, fadeOutHandTime);
             
             setNewReactionAndTranstionTimes();
