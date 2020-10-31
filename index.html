@@ -204,11 +204,14 @@
 
     <div id="score-container">
       <div id="you-container">
-        <span style="margin-right: 5px;">you:</span> <span>👤</span>👤👤👤👤👤👤👤👤👤
+       <span id="you">👤</span>👤👤👤👤👤👤👤👤👤
         <!-- <span id="you-score" class="bigger">10</span><span></span> 👤 -->
       </div>
+      <div id="vs">
+          you vs Mia
+      </div>
       <div id="me-container">
-        <span style="margin-right: 5px;">Mia:</span> <span>👱‍♀</span>👱‍♀👱‍♀👱‍♀👱‍♀👱‍♀👱‍♀👱‍♀👱‍♀👱‍♀
+        <span id="mia">👱‍♀</span>👱‍♀👱‍♀👱‍♀👱‍♀👱‍♀👱‍♀👱‍♀👱‍♀👱‍♀
         <!-- 👱‍♀<span id="me-score" class="bigger">10</span><span></span> -->
       </div>
     </div>
@@ -251,8 +254,8 @@
         
         const neutralizeCircle = document.getElementById('neutralize-circle');
 
-        const you = document.getElementById('you-score');
-        const me = document.getElementById('me-score');
+        const you = document.getElementById('you');
+        const mia = document.getElementById('mia');
 
         const youCongrats = document.getElementById('you-congrats');
         const meCongrats = document.getElementById('me-congrats');
@@ -270,6 +273,9 @@
 
         let youScore = 10;
         let meScore = 10;
+        
+        let yourLives = ['👤','👤','👤','👤','👤','👤','👤','👤','👤','👤'];
+        let meLives = ['👱‍♀','👱‍♀','👱‍♀','👱‍♀','👱‍♀','👱‍♀','👱‍♀','👱‍♀','👱‍♀','👱‍♀'];
 
         let mainLoop;
 
