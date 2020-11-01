@@ -99,6 +99,8 @@
         color: white; 
         text-align: center; 
         margin-top: 10px;
+        width: 260px;
+        text-align: left;
       }
 
       .bigger {
@@ -113,6 +115,9 @@
         color: white; 
         font-size: 17px; 
         margin-top: 10px;
+        width: 250px;
+        border: 1px white solid;
+        text-align: right;
       }
 
       #you-score {
@@ -191,27 +196,42 @@
         } 
       }
 
+      /* #mia { */
+        /* margin-left: 10px; */
+      /* } */
+
+      #you {
+        margin-left: 4px;
+      }
+
+      #you-lives {
+        border: 1px white solid;
+        padding: 2px;
+        width: 225px;
+        display: inline-block;
+        height: 25px;
+      }
   </style>
 </head>
 <body>
     <div id="you-congrats" class="celebration-container">
-      <div id="you-celebration-title">You won, good job 🎉</div>
+      <div id="you-celebration-title">👤You won, good job 🎉</div>
     </div>
 
     <div id="me-congrats" class="celebration-container">
-      <div id="me-celebration-title">👱‍♀️ won, better luck next time </div>
+      <div id="me-celebration-title">👱‍♀️Mia won, better luck next time </div>
     </div>
 
     <div id="score-container">
       <div id="you-container">
-       <span id="you">👤</span>👤👤👤👤👤👤👤👤👤
+       <span id="you">👤</span> <span id="you-lives"></span>
         <!-- <span id="you-score" class="bigger">10</span><span></span> 👤 -->
       </div>
       <div id="vs">
           you vs Mia
       </div>
       <div id="me-container">
-        <span id="mia">👱‍♀</span>👱‍♀👱‍♀👱‍♀👱‍♀👱‍♀👱‍♀👱‍♀👱‍♀👱‍♀
+        <span id="mia-lives"></span><span id="mia">| 👱‍♀</span> 
         <!-- 👱‍♀<span id="me-score" class="bigger">10</span><span></span> -->
       </div>
     </div>
@@ -273,13 +293,25 @@
 
         let youScore = 10;
         let meScore = 10;
-        
-        let yourLives = ['👤','👤','👤','👤','👤','👤','👤','👤','👤','👤'];
-        let meLives = ['👱‍♀','👱‍♀','👱‍♀','👱‍♀','👱‍♀','👱‍♀','👱‍♀','👱‍♀','👱‍♀','👱‍♀'];
+
+        const youLivesElement = document.getElementById('you-lives');
+        const miaLivesElement = document.getElementById('mia-lives');
+        const youLives = ['❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️'];
+        const miaLives = ['❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️'];
 
         let mainLoop;
 
+        const setLives = () => {
+          youLivesElement.innerHTML = '';
+          miaLivesElement.innerHTML = '';
+
+          youLives.forEach(youLive => youLivesElement.innerHTML += youLive);
+          miaLives.forEach(miaLive => miaLivesElement.innerHTML += miaLive);
+        };
+        // setLives();
         const startGame = () => {
+          setLives();
+
           mainLoop = setInterval(() => {
             moveHandInScreen();
 
@@ -368,13 +400,13 @@
         }
 
         const checkIfTheGameIsFinished = () => {
-          if (youScore === winningScore) {
+          if (miaLives.length === winningScore) {
             youCongrats.style.display = 'flex';
             document.getElementById('victory-sound').play();
             stopTheGame();
           }
 
-          if (meScore === winningScore) {
+          if (youLives.length === winningScore) {
             meCongrats.style.display = 'flex';
             document.getElementById('defeat-sound').play();
             stopTheGame();
@@ -450,17 +482,22 @@
         }
 
         const setNewMeScore = () => {
-          youScore = youScore - 1;
-          you.innerHTML = youScore;
+          youLives.pop();
 
-          if (youScore !== winningScore) {
+          // youLives.shift();
+          // youLives.push('💔')
+
+          setLives();
+
+          if (youLives.length !== winningScore) {
             document.getElementById('quack-sound').play();
           }
         }
 
         const setNewYouScore = () => {
-          meScore = meScore - 1;
-          me.innerHTML = meScore;
+          miaLives.pop();
+
+          setLives();
 
           // TODO: this shoudn't be handled in this method
           //  This should done in the on click event
