@@ -157,45 +157,6 @@
         transition: opacity 500ms ease-in-out;
       }
       
-      .loader {
-        position: relative;
-        height: 1px;
-        width: 1px;
-      }
-      
-      .loader:before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        height: 5em;
-        width: 5em;
-        border-style: solid;
-        /* border-color: rgb(139, 92, 71); */
-        border-color: green;
-        border-width: 0;
-        border-radius: 50%;
-        opacity: 0;
-        animation: outer-loader 500ms 1; 
-      }
-
-      @keyframes outer-loader {
-        0% {
-          height: 10px;
-          width: 10px;
-          opacity: 0.7;
-          border-width: 0; 
-        }
-        
-        100% {
-          height: 10px;
-          width: 10px;
-          margin: -6em;
-          opacity: 0.7;
-          border-width: 6em; 
-        } 
-      }
-
       .lives {
         display: inline-block;
         border: 1px white solid;
