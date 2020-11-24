@@ -109,7 +109,7 @@
         margin-bottom: 10px;
         display: flex;
         align-items: center;
-        font-size: 17px; 
+        font-size: 22px; 
       }
 
       .bigger {
@@ -118,12 +118,6 @@
 
       .small {
         font-size: 18px;
-      }
-
-      #me-container {
-        font-size: 17px; 
-        margin-top: 10px;
-        margin-bottom: 10px;
       }
 
       #you-score {
@@ -211,28 +205,33 @@
         border-radius: 25px;
         padding-left: 7px;
         padding-bottom: 3px;
+        font-size: 18px;
+      }
+
+      .player-emoji {
+        margin-right: 3px;
       }
   </style>
 </head>
 <body>
     <div id="you-congrats" class="celebration-container">
-      <div id="you-celebration-title">👤You won, good job 🎉</div>
+      <div id="you-celebration-title">You 👤 won, good job 🎉</div>
     </div>
 
     <div id="me-congrats" class="celebration-container">
-      <div id="me-celebration-title">👱‍♀️Mia won, better luck next time </div>
+      <div id="me-celebration-title">Evil 😈 won, better luck next time </div>
     </div>
 
     <div id="score-container">
       <div id="you-container" class="player-container">
-       <span id="you">👤</span>
+       <span class="player-emoji">👤</span>
        <span id="you-lives" class="lives"></span>
       </div>
       <!-- <div id="vs">
           you vs Mia
       </div> -->
       <div id="me-container" class="player-container">
-        <span id="mia">👱‍♀</span> 
+        <span class="player-emoji">😈</span> 
         <span id="mia-lives" class="lives"></span>
       </div>
     </div>
