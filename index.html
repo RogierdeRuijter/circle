@@ -95,12 +95,21 @@
         align-items: baseline;
       }
 
-      #you-container {
+      @media only screen and (max-width: 600px) {
+        #score-container {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+
+      .player-container {
         color: white; 
-        text-align: center; 
         margin-top: 10px;
-        width: 260px;
-        text-align: left;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        font-size: 17px; 
       }
 
       .bigger {
@@ -112,12 +121,9 @@
       }
 
       #me-container {
-        color: white; 
         font-size: 17px; 
         margin-top: 10px;
-        width: 250px;
-        border: 1px white solid;
-        text-align: right;
+        margin-bottom: 10px;
       }
 
       #you-score {
@@ -196,20 +202,15 @@
         } 
       }
 
-      /* #mia { */
-        /* margin-left: 10px; */
-      /* } */
-
-      #you {
-        margin-left: 4px;
-      }
-
-      #you-lives {
+      .lives {
         border: 1px white solid;
         padding: 2px;
-        width: 225px;
+        width: 170px;
         display: inline-block;
         height: 25px;
+        border-radius: 25px;
+        padding-left: 7px;
+        padding-bottom: 3px;
       }
   </style>
 </head>
@@ -223,16 +224,16 @@
     </div>
 
     <div id="score-container">
-      <div id="you-container">
-       <span id="you">👤</span> <span id="you-lives"></span>
-        <!-- <span id="you-score" class="bigger">10</span><span></span> 👤 -->
+      <div id="you-container" class="player-container">
+       <span id="you">👤</span>
+       <span id="you-lives" class="lives"></span>
       </div>
       <div id="vs">
           you vs Mia
       </div>
-      <div id="me-container">
-        <span id="mia-lives"></span><span id="mia">| 👱‍♀</span> 
-        <!-- 👱‍♀<span id="me-score" class="bigger">10</span><span></span> -->
+      <div id="me-container" class="player-container">
+        <span id="mia">👱‍♀</span> 
+        <span id="mia-lives" class="lives"></span>
       </div>
     </div>
 
@@ -291,13 +292,13 @@
         
         let neutralized = false;
 
-        let youScore = 10;
-        let meScore = 10;
+        let youScore = 8;
+        let meScore = 8;
 
         const youLivesElement = document.getElementById('you-lives');
         const miaLivesElement = document.getElementById('mia-lives');
-        const youLives = ['❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️'];
-        const miaLives = ['❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️'];
+        const youLives = ['❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️'];
+        const miaLives = ['❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️'];
 
         let mainLoop;
 
