@@ -84,35 +84,40 @@
       }
 
       #vs {
-        margin-right: 20px;
+        margin-right: 15px;
+        margin-left: 15px;
         color: white;
       }
 
       #score-container {
         display: flex; 
-        justify-content: center; 
+        justify-content: space-evenly; 
         align-items: baseline;
       }
 
-      #you-container {
+      @media only screen and (max-width: 600px) {
+        #score-container {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+
+      .player-container {
         color: white; 
-        margin-right: 20px; 
-        text-align: center; 
         margin-top: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        font-size: 22px; 
       }
 
       .bigger {
-        font-size: 22px;
+        font-size: 18px;
       }
 
       .small {
         font-size: 18px;
-      }
-
-      #me-container {
-        color: white; 
-        font-size: 17px; 
-        margin-top: 10px;
       }
 
       #you-score {
@@ -191,26 +196,43 @@
         } 
       }
 
+      .lives {
+        border: 1px white solid;
+        padding: 2px;
+        width: 170px;
+        display: inline-block;
+        height: 25px;
+        border-radius: 25px;
+        padding-left: 7px;
+        padding-bottom: 3px;
+        font-size: 18px;
+      }
+
+      .player-emoji {
+        margin-right: 3px;
+      }
   </style>
 </head>
 <body>
     <div id="you-congrats" class="celebration-container">
-      <div id="you-celebration-title">You won, good job 🎉</div>
+      <div id="you-celebration-title">You 👤 won, good job 🎉</div>
     </div>
 
     <div id="me-congrats" class="celebration-container">
-      <div id="me-celebration-title">👱‍♀️ won, better luck next time </div>
+      <div id="me-celebration-title">Evil 😈 won, better luck next time </div>
     </div>
 
     <div id="score-container">
-      <div id="you-container">
-        👤 <span id="you-score" class="bigger">10</span><span></span>
+      <div id="you-container" class="player-container">
+       <span class="player-emoji">👤</span>
+       <span id="you-lives" class="lives"></span>
       </div>
-      <div id="vs">
-        <span class="small">vs</span>
-      </div>
-      <div id="me-container">
-        <span id="me-score" class="bigger">10</span><span></span> 👱‍♀
+      <!-- <div id="vs">
+          you vs Mia
+      </div> -->
+      <div id="me-container" class="player-container">
+        <span class="player-emoji">😈</span> 
+        <span id="mia-lives" class="lives"></span>
       </div>
     </div>
 
@@ -252,8 +274,8 @@
         
         const neutralizeCircle = document.getElementById('neutralize-circle');
 
-        const you = document.getElementById('you-score');
-        const me = document.getElementById('me-score');
+        const you = document.getElementById('you');
+        const mia = document.getElementById('mia');
 
         const youCongrats = document.getElementById('you-congrats');
         const meCongrats = document.getElementById('me-congrats');
@@ -269,12 +291,27 @@
         
         let neutralized = false;
 
-        let youScore = 10;
-        let meScore = 10;
+        let youScore = 8;
+        let meScore = 8;
+
+        const youLivesElement = document.getElementById('you-lives');
+        const miaLivesElement = document.getElementById('mia-lives');
+        const youLives = ['❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️'];
+        const miaLives = ['❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️'];
 
         let mainLoop;
 
+        const setLives = () => {
+          youLivesElement.innerHTML = '';
+          miaLivesElement.innerHTML = '';
+
+          youLives.forEach(youLive => youLivesElement.innerHTML += youLive);
+          miaLives.forEach(miaLive => miaLivesElement.innerHTML += miaLive);
+        };
+        // setLives();
         const startGame = () => {
+          setLives();
+
           mainLoop = setInterval(() => {
             moveHandInScreen();
 
@@ -363,13 +400,13 @@
         }
 
         const checkIfTheGameIsFinished = () => {
-          if (youScore === winningScore) {
+          if (miaLives.length === winningScore) {
             youCongrats.style.display = 'flex';
             document.getElementById('victory-sound').play();
             stopTheGame();
           }
 
-          if (meScore === winningScore) {
+          if (youLives.length === winningScore) {
             meCongrats.style.display = 'flex';
             document.getElementById('defeat-sound').play();
             stopTheGame();
@@ -445,17 +482,22 @@
         }
 
         const setNewMeScore = () => {
-          youScore = youScore - 1;
-          you.innerHTML = youScore;
+          youLives.pop();
 
-          if (youScore !== winningScore) {
+          // youLives.shift();
+          // youLives.push('💔')
+
+          setLives();
+
+          if (youLives.length !== winningScore) {
             document.getElementById('quack-sound').play();
           }
         }
 
         const setNewYouScore = () => {
-          meScore = meScore - 1;
-          me.innerHTML = meScore;
+          miaLives.pop();
+
+          setLives();
 
           // TODO: this shoudn't be handled in this method
           //  This should done in the on click event
