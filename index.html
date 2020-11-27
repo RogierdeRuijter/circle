@@ -284,18 +284,11 @@
               
               checkIfTheGameIsFinished();
 
-              applyCurrentTranstionTimes();
-
               neutralized = false;
             }, timeTheHandNeedsToMoveOutOfTheScreen);
           }, reactionTimeForPlayer);
         };
 
-        const applyCurrentTranstionTimes = () => {
-          imageWrapper.style.webkitTransitionDuration = `${transitionTime}ms`;
-          imageWrapper.style.transitionDuration = `${transitionTime}ms`;
-        };
-      
         const handleNeutralize = (event) => {
           requestAnimationFrame(() => {
             if (handHasnotBeenNeutralizedYet()) { 
@@ -392,31 +385,24 @@
           switch (youScore) {
               case 7:
                 reactionTimeForPlayer -= 50;
-                transitionTime -= 50;
                 break;
               case 6:
                 reactionTimeForPlayer -= 50;
-                transitionTime -= 50;
                 break;
               case 5:
                 reactionTimeForPlayer -= 50;
-                transitionTime -= 50;
                 break;
               case 4:
                 reactionTimeForPlayer -= 50;
-                transitionTime -= 50;
                 break;
               case 3:
                 reactionTimeForPlayer -= 50;
-                transitionTime -= 50;
                 break;
               case 2:
                 reactionTimeForPlayer -= 50;
-                transitionTime -= 50;
                 break;
               case 1:
                 reactionTimeForPlayer -= 50;
-                transitionTime -= 50;
               break;
               default: 
                 console.warn('reaction time case not handled')
