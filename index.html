@@ -253,19 +253,9 @@
         let youScore = 8;
         let meScore = 8;
 
-        const youLivesElement = document.getElementById('you-lives');
-        const miaLivesElement = document.getElementById('mia-lives');
-        const youLives = ['❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️'];
-        const miaLives = ['❤️','❤️','❤️','❤️','❤️','❤️','❤️','❤️'];
-
         let mainLoop;
 
         const setLives = () => {
-          // youLivesElement.innerHTML = '';
-          // miaLivesElement.innerHTML = '';
-
-          // youLives.forEach(youLive => youLivesElement.innerHTML += youLive);
-          // miaLives.forEach(miaLive => miaLivesElement.innerHTML += miaLive);
         };
 
         const startGame = () => {
@@ -441,8 +431,6 @@
         }
 
         const setNewMeScore = () => {
-          // youLives.pop();
-
           setLives();
 
           if (youLives.length !== winningScore) {
@@ -451,8 +439,6 @@
         }
 
         const setNewYouScore = () => {
-          // miaLives.pop();
-
           setLives();
 
           try {
