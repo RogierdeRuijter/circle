@@ -141,15 +141,23 @@
       }
       
       .lives {
-        display: inline-block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border: 1px white solid;
-        padding: 2px;
         min-width: 180px;
+        padding: 2px;
         height: 25px;
         border-radius: 25px;
-        padding-left: 7px;
-        padding-bottom: 3px;
         font-size: 18px;
+      }
+
+      .lives span {
+        -webkit-transition: opacity 300ms ease-out;
+        -moz-transition: opacity 300ms ease-out;
+        -ms-transition: opacity 300ms ease-out;
+        -o-transition: opacity 300ms ease-out;
+        transition: opacity 300ms ease-out;
       }
 
       .player-emoji {
@@ -233,9 +241,6 @@
         
         const neutralizeCircle = document.getElementById('neutralize-circle');
 
-        const you = document.getElementById('you');
-        const mia = document.getElementById('mia');
-
         const youCongrats = document.getElementById('you-congrats');
         const meCongrats = document.getElementById('me-congrats');
         
@@ -255,10 +260,6 @@
 
         let mainLoop;
 
-        const setLives = () => {
-          // TODO: FIND: remove 
-        };
-
         const startGame = () => {
           mainLoop = setInterval(() => {
             moveHandInScreen();
@@ -274,10 +275,9 @@
               moveHandOutOfScreen();
             }
             
-            // Increase the score only when the hand moved out of the screen
             setTimeout(() => {
               if (neutralized === false) {
-                setNewComputerScore();
+                setNewPlayerScore();
               }
               
               checkIfTheGameIsFinished();
@@ -299,7 +299,7 @@
             if (handHasnotBeenNeutralizedYet()) { 
               neutralized = true;
               
-              setNewPlayerScore();
+              setNewComputerScore();
               
               showClickCircle(event);
 
@@ -348,13 +348,13 @@
         }
 
         const checkIfTheGameIsFinished = () => {
-          if (evilScore === winningScore) {
+          if (evilScore <= winningScore) {
             youCongrats.style.display = 'flex';
             document.getElementById('victory-sound').play();
             stopTheGame();
           }
 
-          if (youScore === winningScore) {
+          if (youScore <= winningScore) {
             meCongrats.style.display = 'flex';
             document.getElementById('defeat-sound').play();
             stopTheGame();
@@ -386,14 +386,6 @@
 
         const setNewReactionAndTranstionTimes = () => {
           switch (youScore) {
-              case 9:
-                reactionTimeForPlayer -= 50;
-                // transitionTime -= 100;
-                break;
-              case 8:
-                reactionTimeForPlayer -= 50;
-                transitionTime -= 50;
-                break;
               case 7:
                 reactionTimeForPlayer -= 50;
                 transitionTime -= 50;
@@ -422,6 +414,8 @@
                 reactionTimeForPlayer -= 50;
                 transitionTime -= 50;
               break;
+              default: 
+                console.warn('reaction time case not handled')
             }
         }
 
@@ -429,15 +423,22 @@
           imageWrapper.style.opacity = 0;
         }
 
+        const removeHeart = (id) => {
+          const heartElement = document.getElementById(id);
+          heartElement.style.opacity = 0;
+        };
+
         const setNewComputerScore = () => {
+          removeHeart('evil-life-' + evilScore);
           evilScore = evilScore - 1;
-          
+
           if (evilScore !== winningScore) {
             document.getElementById('quack-sound').play();
           }
         }
 
         const setNewPlayerScore = () => {
+          removeHeart('you-life-' + youScore);
           youScore = youScore - 1;
 
           try {
