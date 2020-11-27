@@ -169,11 +169,29 @@
     <div id="score-container">
       <div id="you-container" class="player-container">
        <span class="player-emoji">👤</span>
-       <span id="you-lives" class="lives"></span>
+       <span id="you-lives" class="lives">
+        <span id="you-life-1">❤️</span>
+        <span id="you-life-2">❤️</span>
+        <span id="you-life-3">❤️</span>
+        <span id="you-life-4">❤️</span>
+        <span id="you-life-5">❤️</span>
+        <span id="you-life-6">❤️</span>
+        <span id="you-life-7">❤️</span>
+        <span id="you-life-8">❤️</span>
+       </span>
       </div>
       <div id="me-container" class="player-container">
         <span class="player-emoji">😈</span> 
-        <span id="mia-lives" class="lives"></span>
+        <span id="evil-lives" class="lives">
+          <span id="evil-life-1">❤️</span>
+          <span id="evil-life-2">❤️</span>
+          <span id="evil-life-3">❤️</span>
+          <span id="evil-life-4">❤️</span>
+          <span id="evil-life-5">❤️</span>
+          <span id="evil-life-6">❤️</span>
+          <span id="evil-life-7">❤️</span>
+          <span id="evil-life-8">❤️</span>
+        </span>
       </div>
     </div>
 
@@ -243,11 +261,11 @@
         let mainLoop;
 
         const setLives = () => {
-          youLivesElement.innerHTML = '';
-          miaLivesElement.innerHTML = '';
+          // youLivesElement.innerHTML = '';
+          // miaLivesElement.innerHTML = '';
 
-          youLives.forEach(youLive => youLivesElement.innerHTML += youLive);
-          miaLives.forEach(miaLive => miaLivesElement.innerHTML += miaLive);
+          // youLives.forEach(youLive => youLivesElement.innerHTML += youLive);
+          // miaLives.forEach(miaLive => miaLivesElement.innerHTML += miaLive);
         };
 
         const startGame = () => {
@@ -423,7 +441,7 @@
         }
 
         const setNewMeScore = () => {
-          youLives.pop();
+          // youLives.pop();
 
           setLives();
 
@@ -433,7 +451,7 @@
         }
 
         const setNewYouScore = () => {
-          miaLives.pop();
+          // miaLives.pop();
 
           setLives();
 
