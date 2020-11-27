@@ -47,11 +47,11 @@
         position: relative;
         display: inline-block;
         
-        left: -150%;
-        opacity: 0;
+        /* left: -150%; */
+        /* opacity: 0; */
         /* Debug code */
-        /* left: 50%; */
-        /* opacity: 1; */
+        left: 50%;
+        opacity: 1;
         
         top: 54%;
       }
@@ -64,7 +64,7 @@
         top: 38%;
         transform: rotate(20deg);
         /* Debug code */
-        /* border: 1px solid white; */
+        border: 1px solid white;
       }
 
       .celebration-container {
@@ -132,6 +132,7 @@
         background-color: white;
         border-radius: 50%;
         opacity: 0.7;
+        transform: rotate(20deg);
       }
 
       .fade {
@@ -209,7 +210,7 @@
       <div id="image-wrapper" class="fade">
         <img id="image" src="handje-iets-groter.PNG">
         <div id="neutralize-circle">
-          <div style="position: relative;">
+          <div style="position: relative; height: 100%;">
             <div id="dot"></div>    
           </div>
         </div>
@@ -269,7 +270,7 @@
             setTimersToHandleScoring();
           }, newTryTime);
         };
-        startGame();
+        // startGame();
 
         const setTimersToHandleScoring = () => {
           setTimeout(() => {
@@ -297,13 +298,15 @@
               setNewComputerScore();
               
               showClickCircle(event);
-
-              fadeOutTheHand();
+              // TODO: comment back in
+              // fadeOutTheHand();
 
               setTimeout(() => {
-                moveHandOutOfScreen();
-
-                dot.style.display = 'none';
+                // TODO: comment back in
+                // moveHandOutOfScreen();
+                
+                // TODO: comment back in
+                //dot.style.display = 'none';
             }, fadeOutHandTime);
             
             setNewReactionAndTranstionTimes();
@@ -359,7 +362,7 @@
         };
 
         const showClickCircle = (event) => {
-          dot.style.display = 'block';
+          dot.style.display = 'inline-block';
 
           const coordinatesNeutralizeCircle = neutralizeCircle.getBoundingClientRect();
           let x, y;
@@ -374,9 +377,10 @@
             x = event.clientX;
             y = event.clientY;
           }
-            
-          dot.style.left = x - coordinatesNeutralizeCircle.left - 5;
-          dot.style.top = y - coordinatesNeutralizeCircle.top - 5;
+
+          const halfOfDotWith = 10;
+          dot.style.left = x - coordinatesNeutralizeCircle.left - halfOfDotWith;
+          dot.style.top = y - coordinatesNeutralizeCircle.top - halfOfDotWith;
         }
 
         const handHasnotBeenNeutralizedYet = () => neutralized === false;
@@ -405,7 +409,7 @@
                 reactionTimeForPlayer -= 50;
               break;
               default: 
-                console.warn('reaction time case not handled')
+                console.warn('reaction time case not handled', youScore)
             }
         }
 
