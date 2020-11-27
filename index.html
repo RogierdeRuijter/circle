@@ -47,11 +47,11 @@
         position: relative;
         display: inline-block;
         
-        /* left: -150%; */
-        /* opacity: 0; */
+        left: -150%;
+        opacity: 0;
         /* Debug code */
-        left: 50%;
-        opacity: 1;
+        /* left: 50%; */
+        /* opacity: 1; */
         
         top: 54%;
       }
@@ -64,7 +64,7 @@
         top: 38%;
         transform: rotate(20deg);
         /* Debug code */
-        border: 1px solid white;
+        /* border: 1px solid white; */
       }
 
       .celebration-container {
@@ -270,7 +270,7 @@
             setTimersToHandleScoring();
           }, newTryTime);
         };
-        // startGame();
+        startGame();
 
         const setTimersToHandleScoring = () => {
           setTimeout(() => {
@@ -298,15 +298,13 @@
               setNewComputerScore();
               
               showClickCircle(event);
-              // TODO: comment back in
-              // fadeOutTheHand();
+
+              fadeOutTheHand();
 
               setTimeout(() => {
-                // TODO: comment back in
-                // moveHandOutOfScreen();
+                moveHandOutOfScreen();
                 
-                // TODO: comment back in
-                //dot.style.display = 'none';
+                dot.style.display = 'none';
             }, fadeOutHandTime);
             
             setNewReactionAndTranstionTimes();
