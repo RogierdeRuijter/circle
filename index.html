@@ -251,7 +251,7 @@
         let neutralized = false;
 
         let youScore = 8;
-        let meScore = 8;
+        let evilScore = 8;
 
         let mainLoop;
 
@@ -278,7 +278,7 @@
             // Increase the score only when the hand moved out of the screen
             setTimeout(() => {
               if (neutralized === false) {
-                setNewMeScore();
+                setNewComputerScore();
               }
               
               checkIfTheGameIsFinished();
@@ -300,7 +300,7 @@
             if (handHasnotBeenNeutralizedYet()) { 
               neutralized = true;
               
-              setNewYouScore();
+              setNewPlayerScore();
               
               showClickCircle(event);
 
@@ -349,13 +349,13 @@
         }
 
         const checkIfTheGameIsFinished = () => {
-          if (miaLives.length === winningScore) {
+          if (evilScore === winningScore) {
             youCongrats.style.display = 'flex';
             document.getElementById('victory-sound').play();
             stopTheGame();
           }
 
-          if (youLives.length === winningScore) {
+          if (youScore === winningScore) {
             meCongrats.style.display = 'flex';
             document.getElementById('defeat-sound').play();
             stopTheGame();
@@ -430,15 +430,18 @@
           imageWrapper.style.opacity = 0;
         }
 
-        const setNewMeScore = () => {
+        const setNewComputerScore = () => {
+          evilScore = evilScore - 1;
+          
           setLives();
 
-          if (youLives.length !== winningScore) {
+          if (evilScore !== winningScore) {
             document.getElementById('quack-sound').play();
           }
         }
 
-        const setNewYouScore = () => {
+        const setNewPlayerScore = () => {
+          youScore = youScore - 1;
           setLives();
 
           try {
