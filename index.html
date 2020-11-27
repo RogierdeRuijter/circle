@@ -256,11 +256,10 @@
         let mainLoop;
 
         const setLives = () => {
+          // TODO: FIND: remove 
         };
 
         const startGame = () => {
-          setLives();
-
           mainLoop = setInterval(() => {
             moveHandInScreen();
 
@@ -433,8 +432,6 @@
         const setNewComputerScore = () => {
           evilScore = evilScore - 1;
           
-          setLives();
-
           if (evilScore !== winningScore) {
             document.getElementById('quack-sound').play();
           }
@@ -442,7 +439,6 @@
 
         const setNewPlayerScore = () => {
           youScore = youScore - 1;
-          setLives();
 
           try {
               document.getElementById('tap-sound').play();
