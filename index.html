@@ -58,7 +58,7 @@
 
       #neutralize-circle {
         position: absolute;
-        width: 15%;
+        width: 16%;
         height: 21%;
         left: 45%;
         top: 38%;
@@ -124,7 +124,7 @@
       }
 
       #dot {
-        position: absolute;
+        position: fixed;
         display: none;
         z-index: 2;
         width: 10px;
@@ -205,15 +205,11 @@
         </span>
       </div>
     </div>
-
     <div id="hand-container">
       <div id="image-wrapper" class="fade">
+        <div id="dot"></div>
         <img id="image" src="handje-iets-groter.PNG">
-        <div id="neutralize-circle">
-          <div style="position: relative; height: 100%;">
-            <div id="dot"></div>    
-          </div>
-        </div>
+        <div id="neutralize-circle"></div>
       </div>
     </div>
 
@@ -291,6 +287,7 @@
         };
 
         const handleNeutralize = (event) => {
+          console.log('handleNeutralize');
           requestAnimationFrame(() => {
             if (handHasnotBeenNeutralizedYet()) { 
               neutralized = true;
@@ -307,7 +304,7 @@
                 dot.style.display = 'none';
             }, fadeOutHandTime);
             
-            setNewReactionAndTranstionTimes();
+            setNewReactionTimes();
           }
 
           // Stop the event from progating and the user to able to zoom/drag the image
@@ -376,14 +373,16 @@
             y = event.clientY;
           }
 
-          const halfOfDotWith = 10;
-          dot.style.left = x - coordinatesNeutralizeCircle.left - halfOfDotWith;
-          dot.style.top = y - coordinatesNeutralizeCircle.top - halfOfDotWith;
+          const halfOfDotWith = 5;
+          // dot.style.left = x - coordinatesNeutralizeCircle.left - halfOfDotWith;
+          dot.style.left = x - halfOfDotWith;
+          // dot.style.top = y - coordinatesNeutralizeCircle.top - halfOfDotWith;
+          dot.style.top = y - halfOfDotWith;
         }
 
         const handHasnotBeenNeutralizedYet = () => neutralized === false;
 
-        const setNewReactionAndTranstionTimes = () => {
+        const setNewReactionTimes = () => {
           reactionTimeForPlayer -= 50;
         }
 
