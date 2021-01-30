@@ -245,6 +245,8 @@
         const meCongrats = document.getElementById('me-congrats');
         
         const timeTheHandNeedsToMoveOutOfTheScreen = 200;
+        let currentTime = 0;
+        const counterTime = 20;
         const newTryTime = 4000;
         const fadeOutHandTime = 500;
         let reactionTimeForPlayer = 1000;
@@ -262,10 +264,18 @@
 
         const startGame = () => {
           mainLoop = setInterval(() => {
-            moveHandInScreen();
+            if (currentTime > newTryTime) {
+              requestAnimationFrame(() => {
+                moveHandInScreen();
 
-            setTimersToHandleScoring();
-          }, newTryTime);
+                setTimersToHandleScoring();
+                
+                currentTime = 0;
+              });
+            } else {
+              currentTime += counterTime;
+            }
+          }, counterTime);
         };
         startGame();
 
