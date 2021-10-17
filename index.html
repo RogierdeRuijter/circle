@@ -1,32 +1,40 @@
 <html lang="en">
-<head>
-  <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
 
-  <title>Circle game</title>
-  <meta name="description" content="Try and catch it">
-  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-  <link rel="stylesheet" type="text/css" href="reset.css">
+    <title>Circle game</title>
+    <meta name="description" content="Try and catch it" />
+    <meta
+      name="viewport"
+      content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1.0, user-scalable=no"
+    />
+    <link rel="stylesheet" type="text/css" href="reset.css" />
 
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="apple-touch-icon" href="favicon.png">
-  
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177518266-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="apple-touch-icon" href="favicon.png" />
 
-    gtag('config', 'UA-177518266-1');
-  </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-177518266-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-  <style>
-     * {
-       /* Disable double tab to zoom on android */
+      gtag("config", "UA-177518266-1");
+    </script>
+
+    <style>
+      * {
+        /* Disable double tab to zoom on android */
         touch-action: manipulation;
       }
 
-     html {
+      html {
         background-color: black;
 
         user-select: none;
@@ -39,20 +47,20 @@
       }
 
       #hand-container {
-        position: relative; 
+        position: relative;
         height: 100%;
       }
 
       #image-wrapper {
         position: relative;
         display: inline-block;
-        
+
         left: -150%;
         opacity: 0;
         /* Debug code */
         /* left: 50%; */
         /* opacity: 1; */
-        
+
         top: 54%;
       }
 
@@ -68,14 +76,14 @@
       }
 
       .celebration-container {
-        display: none; 
-        color: white; 
-        width: 100%; 
-        height: 100%; 
-        z-index: 4; 
-        position: absolute; 
-        align-items: center; 
-        justify-content: center; 
+        display: none;
+        color: white;
+        width: 100%;
+        height: 100%;
+        z-index: 4;
+        position: absolute;
+        align-items: center;
+        justify-content: center;
         flex-direction: row;
       }
 
@@ -94,8 +102,8 @@
       }
 
       #score-container {
-        display: flex; 
-        justify-content: space-evenly; 
+        display: flex;
+        justify-content: space-evenly;
         align-items: baseline;
       }
 
@@ -107,11 +115,11 @@
       }
 
       .player-container {
-        color: white; 
+        color: white;
         margin-top: 10px;
         display: flex;
         align-items: center;
-        font-size: 22px; 
+        font-size: 22px;
       }
 
       #you-score {
@@ -141,7 +149,7 @@
         -o-transition: opacity 500ms ease-in-out;
         transition: opacity 500ms ease-in-out;
       }
-      
+
       .lives {
         display: flex;
         align-items: center;
@@ -167,9 +175,9 @@
       .player-emoji {
         margin-right: 3px;
       }
-  </style>
-</head>
-<body>
+    </style>
+  </head>
+  <body>
     <div id="you-congrats" class="celebration-container">
       <div id="you-celebration-title">You 👤 won, good job 🎉</div>
     </div>
@@ -180,18 +188,18 @@
 
     <div id="score-container">
       <div id="you-container" class="player-container">
-       <span class="player-emoji">👤</span>
-       <span id="you-lives" class="lives">
-        <span id="you-life-1">❤️</span>
-        <span id="you-life-2">❤️</span>
-        <span id="you-life-3">❤️</span>
-        <span id="you-life-4">❤️</span>
-        <span id="you-life-5">❤️</span>
-        <span id="you-life-6">❤️</span>
-       </span>
+        <span class="player-emoji">👤</span>
+        <span id="you-lives" class="lives">
+          <span id="you-life-1">❤️</span>
+          <span id="you-life-2">❤️</span>
+          <span id="you-life-3">❤️</span>
+          <span id="you-life-4">❤️</span>
+          <span id="you-life-5">❤️</span>
+          <span id="you-life-6">❤️</span>
+        </span>
       </div>
       <div id="me-container" class="player-container">
-        <span class="player-emoji">😈</span> 
+        <span class="player-emoji">😈</span>
         <span id="evil-lives" class="lives">
           <span id="evil-life-1">❤️</span>
           <span id="evil-life-2">❤️</span>
@@ -205,13 +213,13 @@
     <div id="hand-container">
       <div id="image-wrapper" class="fade">
         <div id="dot"></div>
-        <img id="image" src="handje-iets-groter.PNG">
+        <img id="image" src="handje-iets-groter.PNG" />
         <div id="neutralize-circle"></div>
       </div>
     </div>
 
     <audio id="tap-sound">
-      <source src="./tap.wav" type="audio/wav"/>
+      <source src="./tap.wav" type="audio/wav" />
       Your browser does not support the audio element.
     </audio>
     <audio id="victory-sound">
@@ -228,231 +236,252 @@
     </audio>
 
     <script>
-        const handContainer = document.getElementById('hand-container');
+      const handContainer = document.getElementById("hand-container");
 
-        const imageWrapper = document.getElementById('image-wrapper');
-        const image = document.getElementById('image');
+      const imageWrapper = document.getElementById("image-wrapper");
+      const image = document.getElementById("image");
 
-        const dot = document.getElementById('dot');
-        
-        const neutralizeCircle = document.getElementById('neutralize-circle');
+      const dot = document.getElementById("dot");
 
-        const youCongrats = document.getElementById('you-congrats');
-        const meCongrats = document.getElementById('me-congrats');
-        
-        const timeTheHandNeedsToMoveOutOfTheScreen = 200;
-        let currentTime = 0;
-        const counterTime = 20;
-        const newTryTime = 4000;
-        const fadeOutHandTime = 500;
-        let reactionTimeForPlayer = 1000;
-        let transitionTime = 500;
+      const neutralizeCircle = document.getElementById("neutralize-circle");
 
-        const sizeOfHand = 35;
-        const winningScore = 0;
-        
-        let neutralized = false;
+      const youCongrats = document.getElementById("you-congrats");
+      const meCongrats = document.getElementById("me-congrats");
 
-        let youScore = 6;
-        let evilScore = 6;
+      const timeTheHandNeedsToMoveOutOfTheScreen = 200;
+      let currentTime = 0;
+      const counterTime = 20;
+      const newTryTime = 4000;
+      const fadeOutHandTime = 500;
+      let reactionTimeForPlayer = 1000;
+      let transitionTime = 500;
 
-        let mainLoop;
+      const sizeOfHand = 35;
+      const winningScore = 0;
 
-        const startGame = () => {
-          mainLoop = setInterval(() => {
-            if (currentTime > newTryTime) {
-              requestAnimationFrame(() => {
-                moveHandInScreen();
+      let neutralized = false;
 
-                setTimersToHandleScoring();
-                
-                currentTime = 0;
-              });
-            } else {
-              currentTime += counterTime;
-            }
-          }, counterTime);
+      let youScore = 6;
+      let evilScore = 6;
+
+      let mainLoop;
+
+      const startGame = () => {
+        let startTime;
+        const start = (timestamp) => {
+          if (startTime === undefined) {
+            startTime = timestamp;
+          }
+
+          const elapsed = timestamp - startTime;
+
+          if (elapsed > counterTime) {
+            /* counterTime is an arbitrary increment, with this logic if the
+             * screen goes out of focus and it is out of focus for e.g. 20 seconds
+             * one increment is added, when it comes back in focus to the currentTime
+             * in this case 20 miliseconds
+             */
+            currentTime += counterTime;
+          }
+
+          if (currentTime > newTryTime) {
+            moveHandInScreen();
+
+            setTimersToHandleScoring();
+
+            currentTime = 0;
+            startTime = undefined;
+          }
+
+          mainLoop = requestAnimationFrame(start);
         };
-        startGame();
 
-        const setTimersToHandleScoring = () => {
+        requestAnimationFrame(start);
+      };
+      startGame();
+
+      const setTimersToHandleScoring = () => {
+        setTimeout(() => {
+          if (neutralized === false) {
+            moveHandOutOfScreen();
+          }
+
           setTimeout(() => {
             if (neutralized === false) {
-              moveHandOutOfScreen();
+              setNewPlayerScore();
             }
-            
+
+            checkIfTheGameIsFinished();
+
+            neutralized = false;
+          }, timeTheHandNeedsToMoveOutOfTheScreen);
+        }, reactionTimeForPlayer);
+      };
+
+      const handleNeutralize = (event) => {
+        requestAnimationFrame(() => {
+          if (handHasnotBeenNeutralizedYet()) {
+            neutralized = true;
+
+            setNewComputerScore();
+
+            showClickCircle(event);
+
+            fadeOutTheHand();
+
             setTimeout(() => {
-              if (neutralized === false) {
-                setNewPlayerScore();
-              }
-              
-              checkIfTheGameIsFinished();
+              moveHandOutOfScreen();
 
-              neutralized = false;
-            }, timeTheHandNeedsToMoveOutOfTheScreen);
-          }, reactionTimeForPlayer);
-        };
-
-        const handleNeutralize = (event) => {
-          requestAnimationFrame(() => {
-            if (handHasnotBeenNeutralizedYet()) { 
-              neutralized = true;
-              
-              setNewComputerScore();
-              
-              showClickCircle(event);
-
-              fadeOutTheHand();
-
-              setTimeout(() => {
-                moveHandOutOfScreen();
-                
-                dot.style.display = 'none';
+              dot.style.display = "none";
             }, fadeOutHandTime);
-            
+
             setNewReactionTimes();
           }
 
           // Stop the event from progating and the user to able to zoom/drag the image
           event.preventDefault();
           event.stopPropagation();
-          });
-        };
-        
-        neutralizeCircle.addEventListener('touchstart', handleNeutralize, false);
-        neutralizeCircle.addEventListener('mousedown', handleNeutralize, false);
-        /* debug code */ 
-        // neutralizeCircle.addEventListener('mousedown', () => {console.log('click')}, false);
+        });
+      };
 
-        const moveHandInScreen = () => {
-          addFadeInAnimation();
-          // You do 100 - the size of the hand to make sure that the hand is always in the screen
-          // TODO: improve this algorithm
-          // Left has a small band with than top when the screen is portait
-          //  This is the other way around when the phone is in portrait 
-          imageWrapper.style.left = getRandomInt(100 - (sizeOfHand - 5)) + '%';
-          imageWrapper.style.top = getRandomInt(100 - (sizeOfHand - 5)) + '%';
+      neutralizeCircle.addEventListener("touchstart", handleNeutralize, false);
+      neutralizeCircle.addEventListener("mousedown", handleNeutralize, false);
+      /* debug code */
+      // neutralizeCircle.addEventListener('mousedown', () => {console.log('click')}, false);
+
+      const moveHandInScreen = () => {
+        addFadeInAnimation();
+        // You do 100 - the size of the hand to make sure that the hand is always in the screen
+        // TODO: improve this algorithm
+        // Left has a small band with than top when the screen is portait
+        //  This is the other way around when the phone is in portrait
+        imageWrapper.style.left = getRandomInt(100 - (sizeOfHand - 5)) + "%";
+        imageWrapper.style.top = getRandomInt(100 - (sizeOfHand - 5)) + "%";
+      };
+
+      const addFadeInAnimation = () => {
+        imageWrapper.style.opacity = 1;
+      };
+
+      const moveHandOutOfScreen = () => {
+        resetFadeAnimation();
+        imageWrapper.style.left = "-150%";
+        imageWrapper.style.top = "-150%";
+      };
+
+      const resetFadeAnimation = () => {
+        imageWrapper.style.opacity = 0;
+      };
+
+      const checkIfTheGameIsFinished = () => {
+        if (evilScore <= winningScore) {
+          youCongrats.style.display = "flex";
+          document.getElementById("victory-sound").play();
+          stopTheGame();
         }
 
-        const addFadeInAnimation = () => {
-          imageWrapper.style.opacity = 1;
+        if (youScore <= winningScore) {
+          meCongrats.style.display = "flex";
+          document.getElementById("defeat-sound").play();
+          stopTheGame();
+        }
+      };
+
+      const showClickCircle = (event) => {
+        dot.style.display = "inline-block";
+
+        const coordinatesNeutralizeCircle = neutralizeCircle.getBoundingClientRect();
+        let x, y;
+
+        var touches = event.touches;
+
+        if (touches) {
+          const touch = touches[0];
+          x = touch.pageX;
+          y = touch.pageY;
+        } else {
+          x = event.clientX;
+          y = event.clientY;
         }
 
-        const moveHandOutOfScreen = () => {
-          resetFadeAnimation();
-          imageWrapper.style.left = '-150%';
-          imageWrapper.style.top = '-150%';
+        const halfOfDotWith = 5;
+        // dot.style.left = x - coordinatesNeutralizeCircle.left - halfOfDotWith;
+        dot.style.left = x - halfOfDotWith;
+        // dot.style.top = y - coordinatesNeutralizeCircle.top - halfOfDotWith;
+        dot.style.top = y - halfOfDotWith;
+      };
+
+      const handHasnotBeenNeutralizedYet = () => neutralized === false;
+
+      const setNewReactionTimes = () => {
+        reactionTimeForPlayer -= 50;
+      };
+
+      const fadeOutTheHand = () => {
+        imageWrapper.style.opacity = 0;
+      };
+
+      const removeHeart = (id) => {
+        const heartElement = document.getElementById(id);
+        heartElement.style.opacity = 0;
+      };
+
+      const setNewComputerScore = () => {
+        removeHeart("evil-life-" + evilScore);
+        evilScore = evilScore - 1;
+
+        if (evilScore !== winningScore) {
+          document.getElementById("tap-sound").play();
         }
+      };
 
-        const resetFadeAnimation = () => {
-          imageWrapper.style.opacity = 0;
+      const setNewPlayerScore = () => {
+        removeHeart("you-life-" + youScore);
+        youScore = youScore - 1;
+
+        document.getElementById("quack-sound").play();
+      };
+
+      const getBrowserWidth = () => document.body.clientWidth;
+      const getBrowserHeight = () => document.body.clientHeight;
+
+      const setHandSizeBasedOnScreenSize = () => {
+        const screenWidth = getBrowserWidth();
+        const screenHeight = getBrowserHeight();
+
+        if (screenWidth < screenHeight) {
+          imageWrapper.style.width = "45%";
+          image.style.width = "100%";
+        } else {
+          imageWrapper.style.height = "45%";
+          image.style.height = "100%";
         }
+      };
+      setHandSizeBasedOnScreenSize();
 
-        const checkIfTheGameIsFinished = () => {
-          if (evilScore <= winningScore) {
-            youCongrats.style.display = 'flex';
-            document.getElementById('victory-sound').play();
-            stopTheGame();
-          }
-
-          if (youScore <= winningScore) {
-            meCongrats.style.display = 'flex';
-            document.getElementById('defeat-sound').play();
-            stopTheGame();
-          }
-        };
-
-        const showClickCircle = (event) => {
-          dot.style.display = 'inline-block';
-
-          const coordinatesNeutralizeCircle = neutralizeCircle.getBoundingClientRect();
-          let x, y;
-          
-          var touches = event.touches;
-
-          if (touches) {
-            const touch = touches[0];
-            x = touch.pageX;
-            y = touch.pageY;
-          } else {
-            x = event.clientX;
-            y = event.clientY;
-          }
-
-          const halfOfDotWith = 5;
-          // dot.style.left = x - coordinatesNeutralizeCircle.left - halfOfDotWith;
-          dot.style.left = x - halfOfDotWith;
-          // dot.style.top = y - coordinatesNeutralizeCircle.top - halfOfDotWith;
-          dot.style.top = y - halfOfDotWith;
-        }
-
-        const handHasnotBeenNeutralizedYet = () => neutralized === false;
-
-        const setNewReactionTimes = () => {
-          reactionTimeForPlayer -= 50;
-        }
-
-        const fadeOutTheHand = () => {
-          imageWrapper.style.opacity = 0;
-        }
-
-        const removeHeart = (id) => {
-          const heartElement = document.getElementById(id);
-          heartElement.style.opacity = 0;
-        };
-
-        const setNewComputerScore = () => {
-          removeHeart('evil-life-' + evilScore);
-          evilScore = evilScore - 1;
-
-          if (evilScore !== winningScore) {
-            document.getElementById('tap-sound').play();
-          }
-        }
-
-        const setNewPlayerScore = () => {
-          removeHeart('you-life-' + youScore);
-          youScore = youScore - 1;
-          
-          document.getElementById('quack-sound').play();
-          
-        };
-
-        const getBrowserWidth = () => document.body.clientWidth;
-        const getBrowserHeight = () => document.body.clientHeight;
-
-        const setHandSizeBasedOnScreenSize = () => {
-          const screenWidth = getBrowserWidth();
-          const screenHeight = getBrowserHeight();
-
-          if (screenWidth < screenHeight) {         
-            imageWrapper.style.width = '45%';
-            image.style.width = '100%';
-          } else {          
-            imageWrapper.style.height = '45%';
-            image.style.height = '100%';
-          }
-        }
-        setHandSizeBasedOnScreenSize();
-
-        const disableZoomAndDragAbilities = () => {
-          window.addEventListener("touchstart", () => {
-            if(event.touches.length > 1){
-              event.preventDefault()
+      const disableZoomAndDragAbilities = () => {
+        window.addEventListener(
+          "touchstart",
+          () => {
+            if (event.touches.length > 1) {
+              event.preventDefault();
             }
-          }, false);
+          },
+          false
+        );
 
-          image.setAttribute('draggable', false);
-        }
-        disableZoomAndDragAbilities();
+        image.setAttribute("draggable", false);
+      };
+      disableZoomAndDragAbilities();
 
-        const stopTheGame = () => {
-          clearInterval(mainLoop);
-        }
-      
-        const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
+      const stopTheGame = () => {
+        cancelAnimationFrame(mainLoop);
+      };
 
-        const supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+      const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
+
+      const supportsTouch =
+        "ontouchstart" in window || navigator.msMaxTouchPoints;
     </script>
-</body>
+  </body>
 </html>
