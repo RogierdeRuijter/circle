@@ -23,8 +23,6 @@
       async
       src="https://www.googletagmanager.com/gtag/js?id=UA-177518266-1"
     ></script>
-
-    <script async src="countdown-timer/countdown-timer.js"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -128,6 +126,10 @@
         display: flex;
         align-items: center;
         font-size: 22px;
+      }
+
+      .red-border {
+        border: 1px red solid !important;
       }
 
       #you-score {
@@ -246,6 +248,7 @@
       <source src="./quack.wav" type="audio/wav" />
       Your browser does not support the audio element.
     </audio>
+    <script src="countdown-timer/countdown-timer.js"></script>
 
     <script>
       const handContainer = document.getElementById("hand-container");
@@ -277,13 +280,19 @@
       let evilScore = 6;
 
       let mainLoop;
-      
+
       // TODO: fix cancelation when the game is over of the main loop
+      // TODO: rename method to something that indicates that the it is the next try
       const startGame = () => {
         let startTime;
+
+        // TODO: make this into a function and explain what is happening
+
         const start = (timestamp) => {
           if (startTime === undefined) {
             startTime = timestamp;
+            // onTimesUp();
+            startTimer(newTryTime / 1000, reactionTimeForPlayer / 1000);
           }
 
           const elapsed = timestamp - startTime;
@@ -300,17 +309,17 @@
           }
 
           if (currentTime > newTryTime) {
+            setColorToRed();
+
             moveHandInScreen();
 
             setTimersToHandleScoring();
 
             currentTime = 0;
             startTime = undefined;
-
-            startTimer();
+          } else {
+            mainLoop = requestAnimationFrame(start);
           }
-
-          mainLoop = requestAnimationFrame(start);
         };
 
         requestAnimationFrame(start);
@@ -331,7 +340,17 @@
             checkIfTheGameIsFinished();
 
             neutralized = false;
+
+            startGame();
           }, timeTheHandNeedsToMoveOutOfTheScreen);
+
+          // startTimer(
+          //   Number(
+          //     Number.parseFloat(
+          //       (newTryTime + reactionTimeForPlayer) / 1000
+          //     ).toPrecision(2)
+          //   )
+          // );
         }, reactionTimeForPlayer);
       };
 
@@ -443,7 +462,18 @@
         heartElement.style.opacity = 0;
       };
 
+      const setLifesBorderOfPlayerThatLostALifeRed = (user) => {
+        document.getElementById(`${user}-lives`).classList.add("red-border");
+        setTimeout(() => {
+          document
+            .getElementById(`${user}-lives`)
+            .classList.remove("red-border");
+        }, 1000);
+      };
+
       const setNewComputerScore = () => {
+        setLifesBorderOfPlayerThatLostALifeRed("evil");
+
         removeHeart("evil-life-" + evilScore);
         evilScore = evilScore - 1;
 
@@ -453,6 +483,8 @@
       };
 
       const setNewPlayerScore = () => {
+        setLifesBorderOfPlayerThatLostALifeRed("you");
+
         removeHeart("you-life-" + youScore);
         youScore = youScore - 1;
 

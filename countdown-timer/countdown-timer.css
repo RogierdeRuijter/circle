@@ -24,11 +24,11 @@
 
 .base-timer__path-remaining {
   /* TODO: figure out if we need to use vw */
-  stroke-width: 70px;
+  stroke-width: 5px;
   stroke-linecap: round;
   transform: rotate(90deg);
   transform-origin: center;
-  transition: 1s linear all;
+  transition: 0.1s linear all;
   fill-rule: nonzero;
   stroke: currentColor;
 }
