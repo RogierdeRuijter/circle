@@ -172,6 +172,10 @@
         transition: opacity 300ms ease-out;
       }
 
+      .red-border {
+        border: 1px red solid !important;
+      }
+
       .player-emoji {
         margin-right: 3px;
       }
@@ -427,6 +431,8 @@
       };
 
       const setNewComputerScore = () => {
+        setLifesBorderOfPlayerThatLostALifeRed("evil");
+
         removeHeart("evil-life-" + evilScore);
         evilScore = evilScore - 1;
 
@@ -436,10 +442,21 @@
       };
 
       const setNewPlayerScore = () => {
+        setLifesBorderOfPlayerThatLostALifeRed("you");
+
         removeHeart("you-life-" + youScore);
         youScore = youScore - 1;
 
         document.getElementById("quack-sound").play();
+      };
+
+      const setLifesBorderOfPlayerThatLostALifeRed = (user) => {
+        document.getElementById(`${user}-lives`).classList.add("red-border");
+        setTimeout(() => {
+          document
+            .getElementById(`${user}-lives`)
+            .classList.remove("red-border");
+        }, 1000);
       };
 
       const getBrowserWidth = () => document.body.clientWidth;
