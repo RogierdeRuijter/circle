@@ -175,7 +175,11 @@
       .red-border {
         border: 1px red solid !important;
       }
-
+      
+      .green-border {
+        border: 1px green solid !important;
+      }
+      
       .player-emoji {
         margin-right: 3px;
       }
@@ -451,11 +455,18 @@
       };
 
       const setLifesBorderOfPlayerThatLostALifeRed = (user) => {
-        document.getElementById(`${user}-lives`).classList.add("red-border");
+        let borderColor = "red";
+        
+        if (user === "evil") {
+          borderColor = "green";   
+        }
+        
+        document.getElementById(`${user}-lives`)
+          .classList.add(`${borderColor}-border`);
         setTimeout(() => {
           document
             .getElementById(`${user}-lives`)
-            .classList.remove("red-border");
+            .classList.remove(`${borderColor}-border`);
         }, 1000);
       };
 
