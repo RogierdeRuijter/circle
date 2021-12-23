@@ -9,7 +9,6 @@
       content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1.0, user-scalable=no"
     />
     <link rel="stylesheet" type="text/css" href="reset.css" />
-
     <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="apple-touch-icon" href="favicon.png" />
 
@@ -172,10 +171,14 @@
         transition: opacity 300ms ease-out;
       }
 
-      .red-border {
-        border: 1px red solid !important;
+      .yellow-border {
+        border: 1px #FFD809 solid !important;
       }
-
+      
+      .purple-border {
+        border: 1px #C433FE solid !important;
+      }
+      
       .player-emoji {
         margin-right: 3px;
       }
@@ -183,7 +186,7 @@
   </head>
   <body>
     <div id="you-congrats" class="celebration-container">
-      <div id="you-celebration-title">You 👤 won, good job 🎉</div>
+      <div id="you-celebration-title">You 😇 won, good job 🎉</div>
     </div>
 
     <div id="me-congrats" class="celebration-container">
@@ -192,25 +195,25 @@
 
     <div id="score-container">
       <div id="you-container" class="player-container">
-        <span class="player-emoji">👤</span>
+        <span class="player-emoji">😇</span>
         <span id="you-lives" class="lives">
-          <span id="you-life-1">❤️</span>
-          <span id="you-life-2">❤️</span>
-          <span id="you-life-3">❤️</span>
-          <span id="you-life-4">❤️</span>
-          <span id="you-life-5">❤️</span>
-          <span id="you-life-6">❤️</span>
+          <span id="you-life-1">💛</span>
+          <span id="you-life-2">💛</span>
+          <span id="you-life-3">💛</span>
+          <span id="you-life-4">💛</span>
+          <span id="you-life-5">💛</span>
+          <span id="you-life-6">💛</span>
         </span>
       </div>
       <div id="me-container" class="player-container">
         <span class="player-emoji">😈</span>
         <span id="evil-lives" class="lives">
-          <span id="evil-life-1">❤️</span>
-          <span id="evil-life-2">❤️</span>
-          <span id="evil-life-3">❤️</span>
-          <span id="evil-life-4">❤️</span>
-          <span id="evil-life-5">❤️</span>
-          <span id="evil-life-6">❤️</span>
+          <span id="evil-life-1">💜</span>
+          <span id="evil-life-2">💜</span>
+          <span id="evil-life-3">💜</span>
+          <span id="evil-life-4">💜</span>
+          <span id="evil-life-5">💜</span>
+          <span id="evil-life-6">💜</span>
         </span>
       </div>
     </div>
@@ -453,11 +456,18 @@
       };
 
       const setLifesBorderOfPlayerThatLostALifeRed = (user) => {
-        document.getElementById(`${user}-lives`).classList.add("red-border");
+        let borderColor = "purple";
+        
+        if (user === "evil") {
+          borderColor = "yellow";   
+        }
+        
+        document.getElementById(`${user}-lives`)
+          .classList.add(`${borderColor}-border`);
         setTimeout(() => {
           document
             .getElementById(`${user}-lives`)
-            .classList.remove("red-border");
+            .classList.remove(`${borderColor}-border`);
         }, 1000);
       };
 
