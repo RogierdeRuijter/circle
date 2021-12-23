@@ -377,12 +377,12 @@
       const checkIfTheGameIsFinished = () => {
         if (evilScore <= winningScore) {
           youCongrats.style.display = "flex";
-          // TODO: load this lazy
+          // TODO: create this element lazy
           //  <audio id="victory-sound">
           //   <source src="./victory.wav" type="audio/wav" />
           //   Your browser does not support the audio element.
           // </audio>
-          document.getElementById("victory-sound").play();
+          // document.getElementById("victory-sound").play();
           stopTheGame();
         }
 
