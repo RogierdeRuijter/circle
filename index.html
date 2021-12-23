@@ -172,13 +172,13 @@
       }
 
       .yellow-border {
-        border: 1px #FFD809 solid !important;
+        border: 1px #ffd809 solid !important;
       }
-      
+
       .purple-border {
-        border: 1px #C433FE solid !important;
+        border: 1px #c433fe solid !important;
       }
-      
+
       .player-emoji {
         margin-right: 3px;
       }
@@ -227,11 +227,6 @@
 
     <audio id="tap-sound">
       <source src="./tap.wav" type="audio/wav" />
-      Your browser does not support the audio element.
-    </audio>
-
-    <audio id="defeat-sound">
-      <source src="./defeat.wav" type="audio/wav" />
       Your browser does not support the audio element.
     </audio>
     <audio id="quack-sound">
@@ -380,18 +375,11 @@
       const checkIfTheGameIsFinished = () => {
         if (evilScore <= winningScore) {
           youCongrats.style.display = "flex";
-          // TODO: create this element lazy
-          //  <audio id="victory-sound">
-          //   <source src="./victory.wav" type="audio/wav" />
-          //   Your browser does not support the audio element.
-          // </audio>
-          // document.getElementById("victory-sound").play();
           stopTheGame();
         }
 
         if (youScore <= winningScore) {
           meCongrats.style.display = "flex";
-          document.getElementById("defeat-sound").play();
           stopTheGame();
         }
       };
@@ -457,12 +445,13 @@
 
       const setLifesBorderOfPlayerThatLostALifeRed = (user) => {
         let borderColor = "purple";
-        
+
         if (user === "evil") {
-          borderColor = "yellow";   
+          borderColor = "yellow";
         }
-        
-        document.getElementById(`${user}-lives`)
+
+        document
+          .getElementById(`${user}-lives`)
           .classList.add(`${borderColor}-border`);
         setTimeout(() => {
           document
