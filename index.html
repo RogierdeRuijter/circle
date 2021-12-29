@@ -198,6 +198,10 @@
         padding-right: 16px;
       }
 
+      #player-helper .bold {
+        font-weight: 600;
+      }
+
       @media screen and (max-width: 800px) {
         #player-helper {
           font-size: 24px;
@@ -215,7 +219,10 @@
     </div>
 
     <div id="player-helper">
-      Hit the center of the hand to defeat your opponent 😈
+      <div>
+        <span class="bold">Hit the center of the hand</span>
+        to defeat your opponent
+      </div>
     </div>
 
     <div id="score-container">
@@ -355,7 +362,9 @@
               setNewPlayerScore();
             }
 
-            if (!userHasInteractedWithThePage) {
+            const isGameFinished = checkIfTheGameIsFinished();
+
+            if (!userHasInteractedWithThePage && !isGameFinished) {
               // Stop the game to stop all the timers placed to play the game
               // Needed because helperUserTime is to longer and otherwise the hand would
               // already appear in the screen
@@ -370,8 +379,6 @@
                 }, helperForUserTime);
               }, 200);
             }
-
-            checkIfTheGameIsFinished();
 
             neutralized = false;
           }, timeTheHandNeedsToMoveOutOfTheScreen);
@@ -437,11 +444,13 @@
         if (evilScore <= winningScore) {
           youCongrats.style.display = "flex";
           stopTheGame();
+          return true;
         }
 
         if (youScore <= winningScore) {
           meCongrats.style.display = "flex";
           stopTheGame();
+          return true;
         }
       };
 
