@@ -276,7 +276,7 @@
       let currentTime = 0;
       const counterTime = 20;
       const newTryTime = 4000;
-      const helperTimeTime = 4000;
+      const helperForUserTime = 4000;
       const fadeOutHandTime = 500;
       let reactionTimeForPlayer = 1000;
       let transitionTime = 500;
@@ -299,7 +299,7 @@
         /* Add a setTimeout here to make sure that the help text is currently not displayed */
         setTimeout(() => {
           document.getElementById("player-helper").remove();
-        }, helperTimeTime);
+        }, helperForUserTime);
 
         // Cleanup
         document.removeEventListener(
@@ -357,6 +357,8 @@
 
             if (!userHasInteractedWithThePage) {
               // Stop the game to stop all the timers placed to play the game
+              // Needed because helperUserTime is to longer and otherwise the hand would
+              // already appear in the screen
               cancelAnimationFrame(mainLoop);
 
               setTimeout(() => {
@@ -365,7 +367,7 @@
                   document.getElementById("player-helper").style.opacity = 0;
 
                   startGame();
-                }, helperTimeTime);
+                }, helperForUserTime);
               }, 200);
             }
 
