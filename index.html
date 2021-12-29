@@ -182,6 +182,27 @@
       .player-emoji {
         margin-right: 3px;
       }
+
+      #player-helper {
+        position: absolute;
+        opacity: 0;
+        transition: opacity 0.2s linear;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        font-size: 32px;
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      @media screen and (max-width: 800px) {
+        #player-helper {
+          font-size: 24px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -191,6 +212,10 @@
 
     <div id="me-congrats" class="celebration-container">
       <div id="me-celebration-title">Evil 😈 won, better luck next time!</div>
+    </div>
+
+    <div id="player-helper">
+      Hit the center of the hand to defeat your opponent 😈
     </div>
 
     <div id="score-container">
@@ -251,6 +276,7 @@
       let currentTime = 0;
       const counterTime = 20;
       const newTryTime = 4000;
+      const helperTimeTime = 4000;
       const fadeOutHandTime = 500;
       let reactionTimeForPlayer = 1000;
       let transitionTime = 500;
@@ -265,6 +291,25 @@
 
       let mainLoop;
 
+      let userHasInteractedWithThePage = false;
+
+      const handleFirstUserInteractionWithPage = () => {
+        userHasInteractedWithThePage = true;
+
+        /* Add a setTimeout here to make sure that the help text is currently not displayed */
+        setTimeout(() => {
+          document.getElementById("player-helper").remove();
+        }, helperTimeTime);
+
+        // Cleanup
+        document.removeEventListener(
+          "click",
+          handleFirstUserInteractionWithPage
+        );
+      };
+
+      document.addEventListener("click", handleFirstUserInteractionWithPage);
+
       const startGame = () => {
         let startTime;
         const start = (timestamp) => {
@@ -278,13 +323,18 @@
             /* counterTime is an arbitrary increment, with this logic if the
              * screen goes out of focus and it is out of focus for e.g. 20 seconds
              * one increment is added, when it comes back in focus to the currentTime
-             * in this case 20 miliseconds
+             * in this case 17 miliseconds
              */
             currentTime += counterTime;
           }
 
           if (currentTime > newTryTime) {
             moveHandInScreen();
+
+            // TODO: add this later to also remove the help text
+            // setTimeout(() => {
+            //   document.getElementById('player-helper').style.opacity = 0;
+            // }, 500);
 
             setTimersToHandleScoring();
 
@@ -308,6 +358,20 @@
           setTimeout(() => {
             if (neutralized === false) {
               setNewPlayerScore();
+            }
+
+            if (!userHasInteractedWithThePage) {
+              // Stop the game to stop all the timers placed to play the game
+              cancelAnimationFrame(mainLoop);
+
+              setTimeout(() => {
+                document.getElementById("player-helper").style.opacity = 1;
+                setTimeout(() => {
+                  document.getElementById("player-helper").style.opacity = 0;
+
+                  startGame();
+                }, helperTimeTime);
+              }, 200);
             }
 
             checkIfTheGameIsFinished();
