@@ -488,6 +488,13 @@
         heartElement.style.opacity = 0;
       };
 
+      const playAudio = (buffer, audioContext) => {
+        const source = audioContext.createBufferSource(); // creates a sound source
+        source.buffer = buffer; // tell the source which sound to play
+        source.connect(audioContext.destination); // connect the source to the context's destination (the speakers)
+        source.start(0);
+      };
+
       const setNewComputerScore = () => {
         setLifesBorderOfPlayerThatLostALifeRed("evil");
 
@@ -496,15 +503,7 @@
 
         if (evilScore !== winningScore) {
           playAudio(tapBuffer, tapAudioContext);
-          // document.getElementById("tap-sound").play();
         }
-      };
-
-      const playAudio = (buffer, audioContext) => {
-        const source = audioContext.createBufferSource(); // creates a sound source
-        source.buffer = buffer; // tell the source which sound to play
-        source.connect(audioContext.destination); // connect the source to the context's destination (the speakers)
-        source.start(0);
       };
 
       const setNewPlayerScore = () => {
