@@ -259,15 +259,15 @@
         <div id="neutralize-circle"></div>
       </div>
     </div>
-
-    <audio id="tap-sound">
+    <!-- TODO: Remove quack sound is also migrated to the audioContext -->
+    <!-- <audio id="tap-sound">
       <source src="./tap.wav" type="audio/wav" />
       Your browser does not support the audio element.
     </audio>
     <audio id="quack-sound">
       <source src="./quack.wav" type="audio/wav" />
       Your browser does not support the audio element.
-    </audio>
+    </audio> -->
 
     <script>
       const handContainer = document.getElementById("hand-container");
@@ -300,8 +300,10 @@
       let evilScore = 6;
 
       let mainLoop;
-
       let userHasInteractedWithThePage = false;
+
+      let tapBuffer;
+      let audioContext;
 
       const handleFirstUserInteractionWithPage = () => {
         userHasInteractedWithThePage = true;
@@ -503,8 +505,16 @@
         evilScore = evilScore - 1;
 
         if (evilScore !== winningScore) {
-          document.getElementById("tap-sound").play();
+          playAudio(tapBuffer);
+          // document.getElementById("tap-sound").play();
         }
+      };
+
+      const playAudio = (buffer) => {
+        const source = audioContext.createBufferSource(); // creates a sound source
+        source.buffer = buffer; // tell the source which sound to play
+        source.connect(audioContext.destination); // connect the source to the context's destination (the speakers)
+        source.start(0);
       };
 
       const setNewPlayerScore = () => {
@@ -513,7 +523,7 @@
         removeHeart("you-life-" + youScore);
         youScore = youScore - 1;
 
-        document.getElementById("quack-sound").play();
+        // document.getElementById("quack-sound").play();
       };
 
       const setLifesBorderOfPlayerThatLostALifeRed = (user) => {
@@ -573,6 +583,32 @@
 
       const supportsTouch =
         "ontouchstart" in window || navigator.msMaxTouchPoints;
+
+      try {
+        // Fix up for prefixing
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioContext = new AudioContext();
+      } catch (e) {
+        // TODO: create fallback option
+      }
+
+      const request = new XMLHttpRequest();
+      request.open("GET", "tap.wav", true);
+      request.responseType = "arraybuffer";
+
+      // Decode asynchronously
+      request.onload = function () {
+        audioContext.decodeAudioData(
+          request.response,
+          (buffer) => {
+            tapBuffer = buffer;
+          },
+          (error) => {
+            console.log("tap sound not be loaded ", error);
+          }
+        );
+      };
+      request.send();
     </script>
   </body>
 </html>
