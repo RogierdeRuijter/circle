@@ -302,8 +302,8 @@
       let mainLoop;
       let userHasInteractedWithThePage = false;
 
-      let tapBuffer;
-      let audioContext;
+      let tapBuffer, quackBuffer;
+      let tapAudioContext, quackAudioContext;
 
       const handleFirstUserInteractionWithPage = () => {
         userHasInteractedWithThePage = true;
@@ -505,12 +505,12 @@
         evilScore = evilScore - 1;
 
         if (evilScore !== winningScore) {
-          playAudio(tapBuffer);
+          playAudio(tapBuffer, tapAudioContext);
           // document.getElementById("tap-sound").play();
         }
       };
 
-      const playAudio = (buffer) => {
+      const playAudio = (buffer, audioContext) => {
         const source = audioContext.createBufferSource(); // creates a sound source
         source.buffer = buffer; // tell the source which sound to play
         source.connect(audioContext.destination); // connect the source to the context's destination (the speakers)
@@ -522,8 +522,7 @@
 
         removeHeart("you-life-" + youScore);
         youScore = youScore - 1;
-
-        // document.getElementById("quack-sound").play();
+        playAudio(quackBuffer, quackAudioContext);
       };
 
       const setLifesBorderOfPlayerThatLostALifeRed = (user) => {
@@ -584,31 +583,39 @@
       const supportsTouch =
         "ontouchstart" in window || navigator.msMaxTouchPoints;
 
-      try {
-        // Fix up for prefixing
+      const createAudioContext = (url) => {
+        // Audio context is used to not make audio that is already playing on a mobile phone to be stopped.
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
-        audioContext = new AudioContext();
-      } catch (e) {
-        // TODO: create fallback option
-      }
+        // All modern browser support this, therefore no fallback provided
+        const audioContext = new AudioContext();
 
-      const request = new XMLHttpRequest();
-      request.open("GET", "tap.wav", true);
-      request.responseType = "arraybuffer";
+        const request = new XMLHttpRequest();
+        request.open("GET", url, true);
+        request.responseType = "arraybuffer";
 
-      // Decode asynchronously
-      request.onload = function () {
-        audioContext.decodeAudioData(
-          request.response,
-          (buffer) => {
-            tapBuffer = buffer;
-          },
-          (error) => {
-            console.log("tap sound not be loaded ", error);
-          }
-        );
+        // Decode asynchronously
+        request.onload = () => {
+          audioContext.decodeAudioData(
+            request.response,
+            (buffer) => {
+              if (url.includes("tap")) {
+                tapBuffer = buffer;
+              } else {
+                quackBuffer = buffer;
+              }
+            },
+            (error) => {
+              console.log(`sound ${url} could not be loaded `, error);
+            }
+          );
+        };
+        request.send();
+
+        return audioContext;
       };
-      request.send();
+
+      tapAudioContext = createAudioContext("tap.wav");
+      quackAudioContext = createAudioContext("quack.wav");
     </script>
   </body>
 </html>
