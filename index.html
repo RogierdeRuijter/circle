@@ -296,19 +296,19 @@
       let tapAudioContext, quackAudioContext;
 
       const handleFirstUserInteractionWithHand = () => {
-        console.log("handleFirstUserInteractionWithHand");
-        userHasInteractedWithTheHand = true;
+        if (!userHasInteractedWithTheHand) {
+          userHasInteractedWithTheHand = true;
+          /* Add a setTimeout here to make sure that the help text is currently not displayed */
+          setTimeout(() => {
+            document.getElementById("player-helper").remove();
+          }, helperForUserTime);
 
-        /* Add a setTimeout here to make sure that the help text is currently not displayed */
-        setTimeout(() => {
-          document.getElementById("player-helper").remove();
-        }, helperForUserTime);
-
-        // Cleanup
-        document.removeEventListener(
-          "click",
-          handleFirstUserInteractionWithHand
-        );
+          // Cleanup
+          document.removeEventListener(
+            "click",
+            handleFirstUserInteractionWithHand
+          );
+        }
       };
 
       // Hand being clicked is the indicator that the user understand the game
