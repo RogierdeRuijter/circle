@@ -290,27 +290,32 @@
       let evilScore = 6;
 
       let mainLoop;
-      let userHasInteractedWithThePage = false;
+      let userHasInteractedWithTheHand = false;
 
       let tapBuffer, quackBuffer;
       let tapAudioContext, quackAudioContext;
 
-      const handleFirstUserInteractionWithPage = () => {
-        userHasInteractedWithThePage = true;
+      const handleFirstUserInteractionWithHand = () => {
+        if (!userHasInteractedWithTheHand) {
+          userHasInteractedWithTheHand = true;
+          /* Add a setTimeout here to make sure that the help text is currently not displayed */
+          setTimeout(() => {
+            document.getElementById("player-helper").remove();
+          }, helperForUserTime);
 
-        /* Add a setTimeout here to make sure that the help text is currently not displayed */
-        setTimeout(() => {
-          document.getElementById("player-helper").remove();
-        }, helperForUserTime);
-
-        // Cleanup
-        document.removeEventListener(
-          "click",
-          handleFirstUserInteractionWithPage
-        );
+          // Cleanup
+          document.removeEventListener(
+            "click",
+            handleFirstUserInteractionWithHand
+          );
+        }
       };
 
-      document.addEventListener("click", handleFirstUserInteractionWithPage);
+      // Hand being clicked is the indicator that the user understand the game
+      imageWrapper.addEventListener(
+        "click",
+        handleFirstUserInteractionWithHand
+      );
 
       const startGame = () => {
         let startTime;
@@ -359,7 +364,7 @@
 
             const isGameFinished = checkIfTheGameIsFinished();
 
-            if (!userHasInteractedWithThePage && !isGameFinished) {
+            if (!userHasInteractedWithTheHand && !isGameFinished) {
               // Stop the game to stop all the timers placed to play the game
               // Needed because helperUserTime is to longer and otherwise the hand would
               // already appear in the screen
